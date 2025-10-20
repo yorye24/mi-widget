@@ -1,23 +1,25 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WhatsApp Flotante</title>
 
   <style>
-    /* Fondo transparente */
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
+      height: 100%;
       background: transparent;
+      overflow: hidden;
     }
 
-    /* Contenedor del botón flotante */
+    /* Botón flotante */
     .whatsapp-float {
       position: fixed;
       bottom: 25px;
       right: 25px;
-      z-index: 1000;
+      z-index: 9999;
       animation: bounce 2s infinite;
       transition: transform 0.3s ease;
     }
@@ -26,7 +28,6 @@
       transform: scale(1.1);
     }
 
-    /* Icono */
     .whatsapp-float img {
       width: 60px;
       height: 60px;
@@ -35,23 +36,20 @@
       cursor: pointer;
     }
 
-    /* Animación de rebote */
+    /* Animación */
     @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-      }
-      40% {
-        transform: translateY(-10px);
-      }
-      60% {
-        transform: translateY(-5px);
-      }
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
     }
   </style>
 </head>
 <body>
 
-  <a href="https://wa.me/573042096459" target="_blank" class="whatsapp-float" aria-label="Chat por WhatsApp">
+  <a href="https://wa.me/573042096459?text=Hola%20👋%2C%20quiero%20más%20información%20sobre%20sus%20servicios."
+     target="_blank"
+     class="whatsapp-float"
+     aria-label="Chat por WhatsApp">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
   </a>
 
