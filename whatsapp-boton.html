@@ -1,0 +1,60 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    html,body{
+      height:100%;
+      margin:0;
+      padding:0;
+      background:transparent;
+    }
+
+    /* --- Estilos del botón --- */
+    .wa-btn{
+      position:fixed;              /* 🔥 Hace que se mantenga al hacer scroll */
+      right:20px;
+      bottom:20px;
+      z-index:999999;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:64px;
+      height:64px;
+      border-radius:50%;
+      box-shadow:0 6px 18px rgba(0,0,0,0.25);
+      background:linear-gradient(180deg,#25D366,#128C7E);
+      text-decoration:none;
+      animation:flotar 2s ease-in-out infinite; /* 👇 Animación suave */
+    }
+
+    /* --- Animación flotante --- */
+    @keyframes flotar {
+      0%,100% { transform:translateY(0); }
+      50% { transform:translateY(-6px); }
+    }
+
+    .wa-btn:hover{
+      transform:scale(1.08);
+      transition:transform 0.15s ease;
+    }
+
+    .wa-icon{
+      width:36px;
+      height:36px;
+      display:block;
+    }
+  </style>
+</head>
+<body>
+  <!-- Reemplaza el número 573001234567 por tu número de WhatsApp -->
+  <a class="wa-btn"
+     href="https://wa.me/573042096459?text=Hola%20%F0%9F%91%8B%20Estoy%20interesado%20en%20más%20información"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="Chat por WhatsApp">
+    <img class="wa-icon" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+  </a>
+</body>
+</html>
