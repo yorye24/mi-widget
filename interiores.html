@@ -1,0 +1,73 @@
+﻿
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Asesoría Diseño de Interiores - Ycay360</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <img src="assets/logo.png" alt="Ycay360" class="logo" onerror="this.style.display='none'">
+        <span class="brand-text">Ycay360</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Inicio</a>
+        <a href="interiores.html">Interiores</a>
+        <a href="soporte.html">Soporte TIC</a>
+        <a href="pintura.html">Pintura</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container content">
+    <h1>Asesoría en diseño de espacios interiores</h1>
+    <p class="lead">Creamos ambientes funcionales y estéticos para hogares y oficinas. Desde el concepto hasta la implementación.</p>
+
+    <section class="features">
+      <ul>
+        <li>Diagnóstico del espacio y propuesta conceptual</li>
+        <li>Planos, renders y selección de materiales</li>
+        <li>Gestión de proveedores y coordinación de obra</li>
+      </ul>
+    </section>
+
+    <section class="quote">
+      <h3>Solicita una visita técnica</h3>
+      <p>Completa los datos por WhatsApp o utiliza nuestro chat para agendar una visita.</p>
+      <a class="btn btn-whatsapp" href="https://wa.me/573042096459" target="_blank" rel="noopener">Agendar por WhatsApp</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year2"></span> Ycay360</p>
+    </div>
+  </footer>
+
+  <a class="whatsapp-float" href="https://wa.me/573042096459" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="Whatsapp" />
+  </a>
+
+  <div id="chatbot" class="chatbot closed" aria-hidden="true">
+    <div class="chat-header">
+      <strong>Asistente Ycay360</strong>
+      <button id="chat-close" aria-label="Cerrar">✕</button>
+    </div>
+    <div id="chat-body" class="chat-body">
+      <div class="bot-msg">Hola 👋, soy el asistente. ¿Necesitas agendar una visita de diseño interior?</div>
+    </div>
+    <form id="chat-form" class="chat-form">
+      <input id="chat-input" type="text" placeholder="Escribe tu mensaje..." autocomplete="off" />
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+  <button id="open-chat" class="open-chat" aria-label="Abrir chat">💬</button>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

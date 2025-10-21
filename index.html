@@ -1,0 +1,115 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ycay360 - Soluciones Integrales</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <!-- Si tienes logo, reemplaza src por assets/logo.png -->
+        <img src="assets/logo.png" alt="Ycay360" class="logo" onerror="this.style.display='none'">
+        <span class="brand-text">Ycay360</span>
+      </a>
+
+      <nav class="nav">
+        <a href="index.html">Inicio</a>
+        <a href="interiores.html">Interiores</a>
+        <a href="soporte.html">Soporte TIC</a>
+        <a href="pintura.html">Pintura</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-left">
+          <h1>Soluciones integrales para tu espacio y tu tecnología</h1>
+          <p class="lead">Diseño de interiores · Soporte tecnológico · Pintura para casas y oficinas. Nos encargamos de planificar, ejecutar y dejar tu sitio como debe ser.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="interiores.html">Ver servicios</a>
+            <a class="btn btn-alt" href="mailto:info@ycaycom.com">Contáctanos</a>
+          </div>
+          <ul class="bullets">
+            <li>Profesionales certificados</li>
+            <li>Coordinación y visitas programadas</li>
+            <li>Soporte y mantenimiento preventivo</li>
+          </ul>
+        </div>
+
+        <div class="hero-right">
+          <!-- Imagen de ejemplo: coloca en assets/hero.jpg -->
+          <img src="assets/hero.jpg" alt="Ycay360" class="hero-img" onerror="this.style.display='none'">
+        </div>
+      </div>
+    </section>
+
+    <section class="services container">
+      <h2>Nuestros servicios</h2>
+      <div class="cards">
+        <a class="card" href="interiores.html">
+          <div class="card-icon">🎨</div>
+          <h3>Asesoría diseño interior</h3>
+          <p>Planeamiento de espacios, renders y propuestas para hogares y oficinas.</p>
+        </a>
+
+        <a class="card" href="soporte.html">
+          <div class="card-icon">💻</div>
+          <h3>Soporte tecnológico</h3>
+          <p>Mantenimiento preventivo y correctivo, asesoría TIC y soporte remoto/presencial.</p>
+        </a>
+
+        <a class="card" href="pintura.html">
+          <div class="card-icon">🖌️</div>
+          <h3>Pintura</h3>
+          <p>Pintura profesional para casas, locales y oficinas con acabados de calidad.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="contact-cta">
+      <div class="container">
+        <h3>¿Listo para agendar una visita?</h3>
+        <p>Escríbenos por WhatsApp o utiliza el chat en la página para resolver dudas rápidas.</p>
+        <a class="btn btn-whatsapp" href="https://wa.me/573042096459" target="_blank" rel="noopener">WhatsApp: +57 304 2096459</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> Ycay360 — Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Botón flotante WhatsApp -->
+  <a class="whatsapp-float" href="https://wa.me/573042096459" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="Whatsapp" />
+  </a>
+
+  <!-- Chatbot widget -->
+  <div id="chatbot" class="chatbot closed" aria-hidden="true">
+    <div class="chat-header">
+      <strong>Asistente Ycay360</strong>
+      <button id="chat-close" aria-label="Cerrar">✕</button>
+    </div>
+    <div id="chat-body" class="chat-body">
+      <div class="bot-msg">Hola 👋, soy el asistente de Ycay360. ¿En qué puedo ayudarte hoy?</div>
+    </div>
+    <form id="chat-form" class="chat-form">
+      <input id="chat-input" type="text" placeholder="Escribe tu mensaje..." autocomplete="off" />
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+
+  <button id="open-chat" class="open-chat" aria-label="Abrir chat">💬</button>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
+
