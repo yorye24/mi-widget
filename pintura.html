@@ -1,1 +1,72 @@
-﻿
+﻿<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Servicio de Pintura - Ycay360</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <img src="assets/logo.png" alt="Ycay360" class="logo" onerror="this.style.display='none'">
+        <span class="brand-text">Ycay360</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Inicio</a>
+        <a href="interiores.html">Interiores</a>
+        <a href="soporte.html">Soporte TIC</a>
+        <a href="pintura.html">Pintura</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container content">
+    <h1>Servicio de pintura para casas y oficinas</h1>
+    <p class="lead">Realizamos pinturas con acabado profesional, preparación de superficies y garantía en los trabajos.</p>
+
+    <section class="features">
+      <ul>
+        <li>Pinturas internas y externas</li>
+        <li>Acabados decorativos y esmaltes</li>
+        <li>Trabajos rápidos y limpios</li>
+      </ul>
+    </section>
+
+    <section class="quote">
+      <h3>Solicita una cotización</h3>
+      <p>Envíanos la dirección y una breve descripción por WhatsApp, y te respondemos con una propuesta.</p>
+      <a class="btn btn-whatsapp" href="https://wa.me/573042096459" target="_blank" rel="noopener">Cotizar por WhatsApp</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year4"></span> Ycay360</p>
+    </div>
+  </footer>
+
+  <a class="whatsapp-float" href="https://wa.me/573042096459" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="Whatsapp" />
+  </a>
+
+  <div id="chatbot" class="chatbot closed" aria-hidden="true">
+    <div class="chat-header">
+      <strong>Asistente Ycay360</strong>
+      <button id="chat-close" aria-label="Cerrar">✕</button>
+    </div>
+    <div id="chat-body" class="chat-body">
+      <div class="bot-msg">Hola 👋, ¿quieres una cotización de pintura?</div>
+    </div>
+    <form id="chat-form" class="chat-form">
+      <input id="chat-input" type="text" placeholder="Escribe tu mensaje..." autocomplete="off" />
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+  <button id="open-chat" class="open-chat" aria-label="Abrir chat">💬</button>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
