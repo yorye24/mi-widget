@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Asesoría Diseño de Interiores - Ycay360</title>
+  <title>Interiores - Ycay360</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
@@ -23,42 +23,51 @@
     </div>
   </header>
 
-  <main class="container content">
-    <h1>Asesoría en diseño de espacios interiores</h1>
-    <p class="lead">Creamos ambientes funcionales y estéticos para hogares y oficinas. Desde el concepto hasta la implementación.</p>
+  <main class="content container">
+    <h1>Diseño de Interiores</h1>
+    <p class="lead">Transformamos tus espacios con propuestas funcionales, estéticas y adaptadas a tu estilo de vida.</p>
 
-    <section class="features">
+    <div class="features">
       <ul>
-        <li>Diagnóstico del espacio y propuesta conceptual</li>
-        <li>Planos, renders y selección de materiales</li>
-        <li>Gestión de proveedores y coordinación de obra</li>
+        <li>Asesoría personalizada en diseño de interiores</li>
+        <li>Renders 3D realistas antes de ejecutar</li>
+        <li>Selección de mobiliario, colores y materiales</li>
+        <li>Coordinación con contratistas y proveedores</li>
+        <li>Proyectos para hogares, oficinas y locales comerciales</li>
       </ul>
-    </section>
+    </div>
 
-    <section class="quote">
-      <h3>Solicita una visita técnica</h3>
-      <p>Completa los datos por WhatsApp o utiliza nuestro chat para agendar una visita.</p>
-      <a class="btn btn-whatsapp" href="https://wa.me/573042096459" target="_blank" rel="noopener">Agendar por WhatsApp</a>
-    </section>
+    <div class="quote">
+      <p>“Un buen diseño no solo se ve bien, también mejora tu calidad de vida.”</p>
+    </div>
+
+    <div class="cta-row" style="margin-top:24px">
+      <a class="btn btn-whatsapp" href="https://wa.me/573042096459?text=Hola,%20quiero%20una%20cotización%20para%20diseño%20de%20interiores" target="_blank" rel="noopener">
+        💬 Cotizar por WhatsApp
+      </a>
+      <a class="btn btn-alt" href="mailto:info@ycaycom.com">Enviar correo</a>
+    </div>
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <p>&copy; <span class="current-year"></span> Ycay360</p>
+      <p>&copy; <span class="current-year"></span> Ycay360 — Todos los derechos reservados.</p>
     </div>
   </footer>
 
+  <!-- Botón flotante WhatsApp -->
   <a class="whatsapp-float" href="https://wa.me/573042096459" target="_blank" rel="noopener" aria-label="WhatsApp">
     <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="Whatsapp" />
   </a>
 
+  <!-- Chatbot widget -->
   <div id="chatbot" class="chatbot closed" aria-hidden="true">
     <div class="chat-header">
       <strong>Asistente Ycay360</strong>
       <button id="chat-close" aria-label="Cerrar">✕</button>
     </div>
     <div id="chat-body" class="chat-body">
-      <div class="bot-msg">Hola 👋, soy el asistente. ¿Necesitas agendar una visita de diseño interior?</div>
+      <div class="bot-msg">Hola 👋, soy el asistente de Ycay360. ¿En qué puedo ayudarte hoy?</div>
     </div>
     <form id="chat-form" class="chat-form">
       <input id="chat-input" type="text" placeholder="Escribe tu mensaje..." autocomplete="off" />
