@@ -75,4 +75,103 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Pintura - servicios
-    if
+    if (/(tipo.*pintura|latex|esmalte|epóxico)/i.test(msg)) {
+      return "Usamos pinturas de alta calidad:\n• Latex para interiores\n• Acrílico para exteriores\n• Esmalte para puertas y molduras\n• Epóxico para pisos industriales\n\n¿Qué área quieres pintar?";
+    }
+
+    if (/(cuánto.*demora|tiempo|rápido)/i.test(msg)) {
+      return "El tiempo depende del área:\n• Apartamento (60m²): 2-3 días\n• Casa (120m²): 4-5 días\n• Oficina: 1-2 días\n\nIncluimos preparación de superficies y limpieza final.";
+    }
+
+    // Pintura - precios
+    if (/(cuánto.*cuesta|precio|presupuesto.*pintura)/i.test(msg)) {
+      return "Nuestros precios por m² son:\n• Pintura interior: $8.000 - $12.000 COP\n• Pintura exterior: $10.000 - $15.000 COP\n• Acabados especiales: desde $18.000 COP\n\n¿Cuál es el área aproximada a pintar?";
+    }
+
+    // Horarios y contacto
+    if (/(horario|atención|cuándo|abre|cierra)/i.test(msg)) {
+      return "Nuestro horario de atención es:\n• Lunes a Viernes: 8:00 AM - 6:00 PM\n• Sábados: 9:00 AM - 2:00 PM\n• Domingos: Cerrado\n\n¿Qué día te gustaría agendar una visita?";
+    }
+
+    if (/(dónde|ubicación|dirección)/i.test(msg)) {
+      return "Atendemos en Bogotá y municipios aledaños. No tenemos oficina fija, pero podemos visitarte en tu ubicación para evaluar el proyecto. ¿En qué zona estás ubicado?";
+    }
+
+    // WhatsApp solo para acciones concretas
+    if (/(agendar|visita|presupuesto.*enviar|cotización.*enviar|hablar.*asesor)/i.test(msg)) {
+      return {
+        text: "¡Perfecto! Para agendar una visita o enviarte un presupuesto detallado, por favor contáctanos por WhatsApp.",
+        showWhatsApp: true
+      };
+    }
+
+    // Respuesta por defecto mejorada
+    return {
+      text: "Gracias por tu mensaje. 👋\n\nHe intentado responder tu pregunta, pero para darte una información más precisa, ¿podrías reformularla o contactarnos directamente por WhatsApp?",
+      showWhatsApp: true
+    };
+  }
+
+  function botReply(text) {
+    const response = getBotReply(text);
+    let replyText, showWhatsAppButton = false;
+
+    if (typeof response === 'string') {
+      replyText = response;
+    } else {
+      replyText = response.text;
+      showWhatsAppButton = response.showWhatsApp;
+    }
+
+    if (chatBody) {
+      const botMsg = document.createElement('div');
+      botMsg.className = 'bot-msg';
+      botMsg.textContent = replyText;
+      chatBody.appendChild(botMsg);
+
+      if (showWhatsAppButton) {
+        const waButton = document.createElement('a');
+        waButton.href = 'https://wa.me/573042096459?text=Hola,%20vi%20el%20chat%20de%20su%20web%20y%20quiero%20m%C3%A1s%20informaci%C3%B3n';
+        waButton.target = '_blank';
+        waButton.rel = 'noopener';
+        waButton.className = 'chat-whatsapp-btn';
+        waButton.textContent = '💬 Contactar por WhatsApp';
+        waButton.style.cssText = `
+          display: inline-block;
+          margin-top: 8px;
+          padding: 6px 12px;
+          background: linear-gradient(90deg, #FF6A00, #6C2BD9);
+          color: white;
+          text-decoration: none;
+          font-size: 12px;
+          border-radius: 6px;
+          font-weight: 600;
+          width: auto;
+          text-align: center;
+        `;
+        chatBody.appendChild(waButton);
+      }
+
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+  }
+
+  // Manejo del formulario
+  if (chatForm && chatInput && chatBody) {
+    chatForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const val = chatInput.value.trim();
+      if (!val) return;
+
+      const userMsg = document.createElement('div');
+      userMsg.className = 'user-msg';
+      userMsg.textContent = val;
+      chatBody.appendChild(userMsg);
+
+      chatInput.value = '';
+      chatBody.scrollTop = chatBody.scrollHeight;
+
+      setTimeout(() => botReply(val), 800);
+    });
+  }
+});
