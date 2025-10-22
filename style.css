@@ -68,78 +68,57 @@ img {
   font-weight: 600;
 }
 
-/* ===== HERO ===== */
 .hero {
-  padding: 48px 0;
-  background: linear-gradient(180deg, rgba(108, 43, 217, 0.05), rgba(255, 106, 0, 0.02));
-}
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1fr 420px;
-  gap: 28px;
-  align-items: center;
-}
-.hero-left h1 {
-  font-family: "Poppins", sans-serif;
-  font-size: 36px;
-  margin: 0 0 14px;
-}
-.lead {
-  color: var(--muted);
-  font-size: 16px;
-  margin-bottom: 18px;
-}
-.cta-row {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-.btn {
-  display: inline-block;
-  padding: 10px 16px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-}
-.btn-primary {
-  background: var(--brand-3);
-  color: #fff;
-}
-.btn-alt {
-  background: transparent;
-  border: 2px solid var(--brand-3);
-  color: var(--brand-3);
-}
-.btn-whatsapp {
-  background: linear-gradient(90deg, var(--brand-1), var(--brand-2));
-  color: #fff;
-  border: none;
+  padding: 60px 0;
+  background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('assets/hero.jpg') no-repeat center center;
+  background-size: cover;
+  position: relative;
+  text-align: center;
 }
 
-.bullets {
-  list-style: none;
-  padding: 0;
-  margin: 10px 0 0;
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.95) 100%);
+  z-index: -1;
 }
-.bullets li {
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+.hero .lead {
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto 24px;
+  color: var(--muted);
+}
+
+.hero .cta-row {
+  margin: 24px 0;
+}
+
+.hero .bullets {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.hero .bullets span {
   background: #fff;
-  padding: 8px 12px;
+  padding: 8px 16px;
   border-radius: 8px;
   box-shadow: var(--shadow);
   font-size: 14px;
 }
-
-/* Si usas <img class="hero-img">, descomenta esto. Si usas fondo CSS, no lo necesitas. */
-/*
-.hero-img {
-  width: 100%;
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-}
-*/
 
 /* ===== SERVICES ===== */
 .services {
@@ -343,3 +322,4 @@ img {
     width: auto;
   }
 }
+
