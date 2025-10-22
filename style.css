@@ -191,14 +191,31 @@ img {
   text-align: center;
 }
 
-/* ===== FOOTER ===== */
-.site-footer {
-  padding: 20px 0;
+.contact-cta {
+  background: linear-gradient(90deg, #fff, rgba(108,43,217,0.02));
+  padding: 48px 0;
+  margin-top: 48px;
   text-align: center;
+}
+
+.contact-cta h3 {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+}
+
+.contact-cta p {
   color: var(--muted);
-  font-size: 14px;
-  border-top: 1px solid #f1f1f1;
-  margin-top: 30px;
+  margin-bottom: 24px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact-cta .btn {
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 12px;
 }
 
 /* ===== WHATSAPP FLOATING BUTTON ===== */
@@ -352,5 +369,6 @@ img {
     width: auto;
   }
 }
+
 
 
