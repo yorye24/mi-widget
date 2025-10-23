@@ -25,22 +25,30 @@
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container hero-content">
-      <h1>Soluciones integrales para tu espacio y tu tecnología</h1>
-      <p class="lead">Diseño de interiores · Soporte tecnológico · Pintura para casas y oficinas.</p>
-      <div class="bullets">
-        <span>Profesionales certificados</span>
-        <span>Coordinación y visitas programadas</span>
-        <span>Soporte y mantenimiento preventivo</span>
-      </div>
-      <div class="cta-row">
-        <a href="interiores.html" class="btn btn-primary">Ver servicios</a>
-        <a href="mailto:info@ycaycom.com" class="btn btn-alt">Contáctanos</a>
-      </div>
+  <!-- HERO CON VIDEO DE FONDO -->
+<section class="hero">
+  <div class="hero-video-bg">
+    <video autoplay loop muted playsinline preload="auto">
+      <source src="assets/hero-video.mp4" type="video/mp4">
+      <!-- Fallback: imagen si el video no carga -->
+      <img src="assets/hero.jpg" alt="Fondo hero">
+    </video>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>Soluciones integrales para tu espacio y tu tecnología</h1>
+    <p class="lead">Diseño de interiores · Soporte tecnológico · Pintura para casas y oficinas.</p>
+    <div class="bullets">
+      <span>Profesionales certificados</span>
+      <span>Coordinación y visitas programadas</span>
+      <span>Soporte y mantenimiento preventivo</span>
     </div>
-  </section>
+    <div class="cta-row">
+      <a href="interiores.html" class="btn btn-primary">Ver servicios</a>
+      <a href="mailto:info@ycaycom.com" class="btn btn-alt">Contáctanos</a>
+    </div>
+  </div>
+</section>
 
   <!-- SERVICIOS MEJORADOS -->
 <section class="services">
@@ -150,6 +158,7 @@
   <script>document.querySelector('.current-year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
+
 
 
 
