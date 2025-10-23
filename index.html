@@ -26,26 +26,31 @@
   </header>
 
   <!-- HERO CON VIDEO DE FONDO -->
-<section class="hero">
-  <div class="hero-video-bg">
-    <video autoplay loop muted playsinline preload="auto">
-      <source src="assets/hero-video.mp4" type="video/mp4">
-      <!-- Fallback: imagen si el video no carga -->
-      <img src="assets/hero.jpg" alt="Fondo hero">
-    </video>
-  </div>
+<section class="hero-video-section">
+  <!-- Video de fondo -->
+  <video class="hero-bg-video" autoplay loop muted playsinline preload="auto">
+    <source src="assets/hero-video.mp4" type="video/mp4">
+    <!-- Fallback: imagen si el video falla -->
+    <img src="assets/hero-fallback.jpg" alt="Ycay360 - Soluciones integrales">
+  </video>
+
+  <!-- Overlay oscuro para legibilidad -->
   <div class="hero-overlay"></div>
+
+  <!-- Contenido del hero -->
   <div class="hero-content">
     <h1>Soluciones integrales para tu espacio y tu tecnología</h1>
-    <p class="lead">Diseño de interiores · Soporte tecnológico · Pintura para casas y oficinas.</p>
-    <div class="bullets">
+    <p class="lead">Soporte TIC • Pintura premium • Mantenimiento y optimización digital</p>
+    
+    <div class="hero-bullets">
       <span>Profesionales certificados</span>
       <span>Coordinación y visitas programadas</span>
       <span>Soporte y mantenimiento preventivo</span>
     </div>
-    <div class="cta-row">
-      <a href="interiores.html" class="btn btn-primary">Ver servicios</a>
-      <a href="mailto:info@ycaycom.com" class="btn btn-alt">Contáctanos</a>
+
+    <div class="hero-cta">
+      <a href="#servicios" class="btn btn-primary">Ver servicios</a>
+      <a href="https://wa.me/573042096459" target="_blank" class="btn btn-secondary">Contáctanos</a>
     </div>
   </div>
 </section>
@@ -158,6 +163,7 @@
   <script>document.querySelector('.current-year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
+
 
 
 
