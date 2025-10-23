@@ -1004,3 +1004,123 @@ img {
   font-size: 2.5rem;
   margin-bottom: 16px;
 }
+
+/* ====================== CHATBOT AUTOMÁTICO ====================== */
+.chatbot {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 350px;
+  max-width: 90vw;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  z-index: 1000;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+}
+
+.chatbot.closed {
+  transform: translateY(20px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.chat-header {
+  background: linear-gradient(135deg, #ff6b35, #9c27b0);
+  color: white;
+  padding: 16px;
+  border-radius: 16px 16px 0 0;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#chat-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.chat-body {
+  padding: 16px;
+  flex: 1;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.bot-msg {
+  background: #f1f5f9;
+  color: #333;
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  max-width: 85%;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  align-self: flex-start;
+}
+
+.chat-form {
+  display: flex;
+  padding: 12px;
+  border-top: 1px solid #eee;
+  background: #fafafa;
+  border-radius: 0 0 16px 16px;
+}
+
+#chat-input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+#chat-input:focus {
+  border-color: #ff6b35;
+}
+
+.chat-form button {
+  background: #ff6b35;
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.open-chat {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25D366;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 999;
+  transition: all 0.3s;
+}
+
+.open-chat:hover {
+  transform: scale(1.1);
+}
