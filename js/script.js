@@ -7,57 +7,67 @@ document.addEventListener('DOMContentLoaded', () => {
   const input = document.getElementById('chat-input');
   const body = document.getElementById('chat-body');
 
-  // Respuestas automáticas
+  // DETECTAR PÁGINA
+  const pagina = document.body.dataset.page || 'inicio';
+
+  // RESPUESTAS POR PÁGINA
   const respuestas = {
-    saludo: "¡Hola! Soy el asistente de Ycay360. ¿En qué puedo ayudarte hoy?",
-    servicios: "Ofrecemos:\n• Diseño de interiores\n• Soporte técnico (TIC)\n• Pintura profesional\n\n¿Cuál te interesa?",
-    interiores: "Perfecto. Te ayudo con diseño de espacios, renders 3D y ejecución.\n\n¿Quieres que un experto te asesore por WhatsApp?",
-    soporte: "Genial. Mantenimiento de PC, redes WiFi, soporte remoto o presencial.\n\n¿Te contactamos por WhatsApp para ayudarte?",
-    pintura: "Excelente. Pintura de alta calidad para casas y oficinas.\n\n¿Te gustaría una cotización personalizada por WhatsApp?",
-    default: "Entiendo. Para darte la mejor atención, un especialista te contactará por WhatsApp en minutos.\n\n¿Listo para chatear con un experto?",
-    despedida: "¡Perfecto! Te estamos redirigiendo a WhatsApp..."
+    inicio: {
+      saludo: "¡Hola! Bienvenido a Ycay360. Ofrecemos:\n• Diseño de interiores\n• Soporte técnico\n• Pintura profesional\n\n¿Cuál te interesa?",
+      default: "Perfecto. Un experto te ayudará por WhatsApp en minutos.\n\n¿Listo para chatear?",
+      despedida: "¡Genial! Te redirigimos a WhatsApp..."
+    },
+    interiores: {
+      saludo: "¡Hola! Estás en **Diseño de Interiores**.\n\nTe ofrecemos:\n• Asesoría personalizada\n• Renders 3D realistas\n• Ejecución completa del proyecto\n\n¿Quieres que un diseñador te contacte?",
+      default: "Entendido. Un especialista en diseño te escribirá por WhatsApp.\n\n¿Te parece bien?",
+      despedida: "¡Perfecto! Abriendo WhatsApp..."
+    },
+    soporte: {
+      saludo: "¡Hola! Estás en **Soporte TIC**.\n\nServicios:\n• Mantenimiento de PC\n• Redes WiFi\n• Soporte remoto o presencial\n• Recuperación de datos\n\n¿En qué necesitas ayuda?",
+      default: "Claro. Un técnico te contactará por WhatsApp para resolverlo.\n\n¿Listo?",
+      despedida: "¡Excelente! Te conectamos ahora..."
+    },
+    pintura: {
+      saludo: "¡Hola! Estás en **Pintura Profesional**.\n\nIncluye:\n• Preparación de superficies\n• Pinturas premium\n• Acabados perfectos\n• Garantía de 1 año\n\n¿Quieres una cotización personalizada?",
+      default: "Perfecto. Un pintor experto te escribirá por WhatsApp.\n\n¿Seguimos?",
+      despedida: "¡Listo! Te redirigimos..."
+    }
   };
 
-  let conversacion = ['saludo'];
+  const r = respuestas[pagina];
+  let conversacion = [];
 
-  // Abrir chatbot
+  // ABRIR CHAT
   openBtn.addEventListener('click', () => {
     chatbot.classList.add('open');
-    mostrarMensaje(respuestas.saludo, 'bot');
+    if (body.children.length === 0) {
+      mostrarMensaje(r.saludo, 'bot');
+    }
   });
 
-  // Cerrar
+  // CERRAR
   closeBtn.addEventListener('click', () => {
     chatbot.classList.remove('open');
   });
 
-  // Enviar mensaje
+  // ENVIAR MENSAJE
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!input.value.trim()) return;
 
-    const userMsg = input.value.toLowerCase().trim();
+    const userMsg = input.value.trim();
     mostrarMensaje(userMsg, 'user');
     input.value = '';
 
-    // Lógica de respuesta
     setTimeout(() => {
-      let respuesta = respuestas.default;
+      let respuesta = r.default;
 
-      if (userMsg.includes('hola') || userMsg.includes('buenas') || userMsg.includes('saludos')) {
-        respuesta = respuestas.saludo;
-      } else if (userMsg.includes('interior') || userMsg.includes('diseño')) {
-        respuesta = respuestas.interiores;
-        conversacion.push('interiores');
-      } else if (userMsg.includes('soporte') || userMsg.includes('técnico') || userMsg.includes('computador')) {
-        respuesta = respuestas.soporte;
-        conversacion.push('soporte');
-      } else if (userMsg.includes('pintura') || userMsg.includes('pintar')) {
-        respuesta = respuestas.pintura;
-        conversacion.push('pintura');
-      } else if (userMsg.includes('sí') || userMsg.includes('si') || userMsg.includes('claro') || userMsg.includes('ok')) {
-        respuesta = respuestas.despedida;
-        mostrarBotonWhatsApp();
+      const msg = userMsg.toLowerCase();
+      if (msg.includes('hola') || msg.includes('buenas') || msg.includes('saludos')) {
+        respuesta = r.saludo;
+      } else if (msg.includes('sí') || msg.includes('si') || msg.includes('claro') || msg.includes('ok') || msg.includes('dale')) {
+        respuesta = r.despedida;
+        mostrarBotonWhatsApp(pagina);
         return;
       }
 
@@ -65,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 800);
   });
 
-  // Mostrar mensaje
+  // MOSTRAR MENSAJE
   function mostrarMensaje(texto, tipo) {
     const msg = document.createElement('div');
     msg.classList.add(tipo === 'bot' ? 'bot-msg' : 'user-msg');
@@ -74,21 +84,27 @@ document.addEventListener('DOMContentLoaded', () => {
     body.scrollTop = body.scrollHeight;
   }
 
-  // Botón WhatsApp
-  function mostrarBotonWhatsApp() {
+  // BOTÓN WHATSAPP
+  function mostrarBotonWhatsApp(pagina) {
+    const textos = {
+      inicio: "Hola, vengo del chat de la página principal",
+      interiores: "Hola, quiero cotizar diseño de interiores",
+      soporte: "Hola, necesito soporte técnico",
+      pintura: "Hola, quiero cotizar pintura"
+    };
+
     setTimeout(() => {
       const btn = document.createElement('div');
       btn.innerHTML = `
-        <a href="https://wa.me/573042096459?text=Hola,%20vengo%20del%20chat%20de%20la%20p%C3%A1gina" 
+        <a href="https://wa.me/573042096459?text=${encodeURIComponent(textos[pagina])}" 
            target="_blank" 
            class="btn-whatsapp-chat">
-          Chatear con un experto
+          Continuar en WhatsApp
         </a>
       `;
       body.appendChild(btn);
       body.scrollTop = body.scrollHeight;
 
-      // Cerrar chat tras 2 segundos
       setTimeout(() => {
         chatbot.classList.remove('open');
       }, 2000);
