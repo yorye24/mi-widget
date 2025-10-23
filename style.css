@@ -957,3 +957,50 @@ img {
 .icon:nth-child(4):before { -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22white%22><path d=%22M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z%22/></svg>'); }
 
 /* REUTILIZA ESTILOS DE SOPORTE (page-hero, services-grid, etc.) */
+
+/* ====================== CTA MEJORADO ====================== */
+.contact-cta {
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #fff8f0, #f8f0ff);
+  text-align: center;
+}
+
+.contact-cta h3 {
+  font-size: 2rem;
+  margin-bottom: 16px;
+  background: var(--bg-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.contact-cta p {
+  color: #666;
+  margin-bottom: 32px;
+  font-size: 1.1rem;
+}
+
+.btn-whatsapp {
+  background: #25D366;
+  color: white;
+  padding: 16px 36px;
+  font-size: 1.1rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 8px 25px rgba(37,211,102,0.4);
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.btn-whatsapp:hover {
+  background: #1DA851;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(37,211,102,0.5);
+}
+
+/* ÍCONOS SVG EN TARJETAS */
+.card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
