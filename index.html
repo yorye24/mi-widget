@@ -164,6 +164,78 @@
   <script>
     document.querySelector('.current-year').textContent = new Date().getFullYear();
   </script>
+  <script>
+// === CHATBOT AUTOMÁTICO Y CIERRE FUNCIONAL ===
+document.addEventListener('DOMContentLoaded', () => {
+  const chatbot = document.getElementById('chatbot');
+  const openBtn = document.getElementById('open-chat');
+  const closeBtn = document.getElementById('chat-close');
+
+  // ABRIR CHATBOT AUTOMÁTICAMENTE DESPUÉS DE 2 SEGUNDOS
+  const openChatbot = () => {
+    chatbot.classList.remove('closed');
+    chatbot.setAttribute('aria-hidden', 'false');
+    openBtn.style.display = 'none';
+  };
+
+  const closeChatbot = () => {
+    chatbot.classList.add('closed');
+    chatbot.setAttribute('aria-hidden', 'true');
+    openBtn.style.display = 'flex';
+  };
+
+  // Abrir al cargar la página (después de 2 segundos)
+  setTimeout(openChatbot, 2000);
+
+  // Cerrar con el botón X
+  closeBtn.addEventListener('click', closeChatbot);
+
+  // Volver a abrir con el botón flotante
+  openBtn.addEventListener('click', openChatbot);
+
+  // Enviar mensaje con Enter
+  const chatInput = document.getElementById('chat-input');
+  const chatForm = document.getElementById('chat-form');
+  const chatBody = document.getElementById('chat-body');
+
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = chatInput.value.trim();
+    if (!message) return;
+
+    // Mostrar mensaje del usuario
+    const userMsg = document.createElement('div');
+    userMsg.className = 'user-msg';
+    userMsg.textContent = message;
+    chatBody.appendChild(userMsg);
+
+    // Limpiar input
+    chatInput.value = '';
+
+    // Scroll automático
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    // Respuesta automática (puedes personalizar)
+    setTimeout(() => {
+      const botReply = document.createElement('div');
+      botReply.className = botReply;
+      botReply.innerHTML = `
+        ¡Entendido! Te ayudo con eso. 
+        <br><br>
+        <strong>¿En qué servicio estás interesado?</strong><br>
+        • Diseño de interiores<br>
+        • Soporte técnico<br>
+        • Pintura<br>
+        <br>
+        O dime directamente: <em>¿cuántos m² tiene tu espacio?</em>
+      `;
+      chatBody.appendChild(botReply);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }, 800);
+  });
+});
+</script>
 </body>
 </html>
+
 
