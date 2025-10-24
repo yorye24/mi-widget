@@ -62,8 +62,14 @@ document.addEventListener('DOMContentLoaded', () => {
   let conversacion = JSON.parse(sessionStorage.getItem('chatbot_conversation')) || [];
   conversacion.forEach(msg => mostrarMensaje(msg.text, msg.type));
 
+  // ASEGURAR QUE EL CHATBOT ESTÉ CERRADO INICIALMENTE
+  chatbot.classList.add('closed');
+  openBtn.style.display = 'flex';
+  console.log(`Chatbot inicializado como cerrado en ${pagina}`);
+
   // ABRIR CHATBOT AUTOMÁTICAMENTE DESPUÉS DE 2 SEGUNDOS
   setTimeout(() => {
+    chatbot.classList.remove('closed');
     chatbot.classList.add('open');
     if (body.children.length === 0) {
       mostrarMensaje(r.saludo, 'bot');
@@ -76,8 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
   closeBtn.addEventListener('click', () => {
     try {
       chatbot.classList.remove('open');
+      chatbot.classList.add('closed');
       openBtn.style.display = 'flex';
-      console.log(`Chatbot cerrado en ${pagina}`);
+      console.log(`Chatbot cerrado manualmente en ${pagina}, botón open-chat restaurado`);
     } catch (error) {
       console.error(`Error al cerrar el chatbot en ${pagina}:`, error);
     }
@@ -86,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ABRIR CHAT
   openBtn.addEventListener('click', () => {
     try {
+      chatbot.classList.remove('closed');
       chatbot.classList.add('open');
       if (body.children.length === 0) {
         mostrarMensaje(r.saludo, 'bot');
@@ -127,59 +135,4 @@ document.addEventListener('DOMContentLoaded', () => {
   // NAVEGACIÓN MÓVIL
   if (toggle && nav) {
     toggle.addEventListener('click', () => {
-      nav.classList.toggle('active');
-      console.log('Navegación móvil toggled');
-    });
-  }
-
-  // MOSTRAR MENSAJE
-  function mostrarMensaje(texto, tipo) {
-    try {
-      const msg = document.createElement('div');
-      msg.classList.add(tipo === 'bot' ? 'bot-msg' : 'user-msg');
-      msg.innerHTML = texto.replace(/\n/g, '<br>');
-      body.appendChild(msg);
-      body.scrollTop = body.scrollHeight;
-      conversacion.push({ text: texto, type: tipo });
-      sessionStorage.setItem('chatbot_conversation', JSON.stringify(conversacion));
-      console.log(`Mensaje ${tipo} añadido en ${pagina}`);
-    } catch (error) {
-      console.error(`Error al mostrar mensaje en ${pagina}:`, error);
-    }
-  }
-
-  // BOTÓN WHATSAPP
-  function mostrarBotonWhatsApp(pagina) {
-    const textos = {
-      inicio: "Hola, vengo del chat de la página principal",
-      interiores: "Hola, quiero cotizar diseño de interiores",
-      soporte: "Hola, necesito soporte técnico",
-      pintura: "Hola, quiero cotizar pintura"
-    };
-
-    try {
-      sessionStorage.removeItem('chatbot_conversation');
-      setTimeout(() => {
-        const btn = document.createElement('div');
-        btn.innerHTML = `
-          <a href="https://wa.me/573042096459?text=${encodeURIComponent(textos[pagina])}" 
-             target="_blank" 
-             class="btn-whatsapp-chat">
-            Continuar en WhatsApp
-          </a>
-        `;
-        body.appendChild(btn);
-        body.scrollTop = body.scrollHeight;
-        console.log(`Botón de WhatsApp mostrado en ${pagina}`);
-
-        setTimeout(() => {
-          chatbot.classList.remove('open');
-          openBtn.style.display = 'flex';
-          console.log(`Chatbot cerrado tras redirigir a WhatsApp en ${pagina}`);
-        }, 2000);
-      }, 1000);
-    } catch (error) {
-      console.error(`Error al mostrar el botón de WhatsApp en ${pagina}:`, error);
-    }
-  }
-});
+      nav.classList
