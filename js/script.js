@@ -56,9 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
       despedida: "¡Listo! Te redirigimos..."
     },
     faq: {
-      ubicacion: "Estamos ubicados en Bogotá, Colombia. ¿Quieres que te demos más detalles por WhatsApp?",
-      horario: "Nuestro horario es de lunes a viernes de 8:00 a.m. a 6:00 p.m., y sábados de 9:00 a.m. a 1:00 p.m. ¿Te ayudamos con algo más o quieres contactarnos por WhatsApp?",
-      precio: "Los precios varían según el servicio y el proyecto. Por ejemplo, pintura desde $30,000/m², soporte técnico desde $50,000, y diseño de interiores personalizado. ¿Quieres una cotización detallada por WhatsApp?",
+      ubicacion: "Estamos ubicados en Bello, Colombia. ¿Quieres que te demos más detalles por WhatsApp?",
+      horario: "Nuestro horario es de lunes a viernes de 8:00 a.m. a 5:00 p.m., y sábados de 8:00 a.m. a 1:00 p.m. ¿Te ayudamos con algo más o quieres contactarnos por WhatsApp?",
+      precio: "Los precios varían según el servicio y el proyecto. Por ejemplo, pintura desde $27,000/m², soporte técnico desde $50,000, y diseño de interiores personalizado. ¿Quieres una cotización detallada por WhatsApp?",
       servicios: "Ofrecemos diseño de interiores, soporte técnico (redes, PC, recuperación de datos), y pintura profesional con garantía. ¿Te interesa algún servicio en particular o quieres más detalles por WhatsApp?",
       contacto: "Puedes contactarnos por WhatsApp al +57 304 2096459 o por correo a contacto@ycay360.com. ¿Prefieres que te llamemos o seguimos por WhatsApp?"
     }
@@ -283,3 +283,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 });
+
