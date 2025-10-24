@@ -1255,13 +1255,19 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
+  font-size: 1.1rem; /* Esto se puede quitar si solo usas SVG */
   transition: all 0.3s;
 }
 
 .chat-form button:hover {
   background: #e55a2b;
   transform: scale(1.05);
+}
+
+.chat-form button svg {
+  width: 20px;
+  height: 20px;
+  stroke: white; /* Asegura que la flecha sea blanca */
 }
 
 .open-chat {
@@ -1284,31 +1290,4 @@ img {
 .open-chat:hover {
   transform: scale(1.1);
   box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-}
-
-.chat-form button {
-  background: #ff6b35;
-  color: white;
-  border: none;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  margin-left: 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem; /* Esto se puede quitar si solo usas SVG */
-  transition: all 0.3s;
-}
-
-.chat-form button:hover {
-  background: #e55a2b;
-  transform: scale(1.05);
-}
-
-.chat-form button svg {
-  width: 20px;
-  height: 20px;
-  stroke: white; /* Asegura que la flecha sea blanca */
 }
