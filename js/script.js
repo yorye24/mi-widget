@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pagina = document.body.dataset.page || 'inicio';
   console.log(`Página detectada: ${pagina}`);
 
-  // RESPUESTAS POR PÁGINA
+  // RESPUESTAS POR PÁGINA Y FAQ
   const respuestas = {
     inicio: {
       saludo: "¡Hola! Bienvenido a Ycay360. Ofrecemos:\n• Diseño de interiores\n• Soporte técnico\n• Pintura profesional\n\n¿Cuál te interesa?",
@@ -54,6 +54,13 @@ document.addEventListener('DOMContentLoaded', () => {
       saludo: "¡Hola! Estás en **Pintura Profesional**.\n\nIncluye:\n• Preparación de superficies\n• Pinturas premium\n• Acabados perfectos\n• Garantía de 1 año\n\n¿Quieres una cotización personalizada?",
       default: "Perfecto. Un pintor experto te escribirá por WhatsApp.\n\n¿Seguimos?",
       despedida: "¡Listo! Te redirigimos..."
+    },
+    faq: {
+      ubicacion: "Estamos ubicados en Bogotá, Colombia. ¿Quieres que te demos más detalles por WhatsApp?",
+      horario: "Nuestro horario es de lunes a viernes de 8:00 a.m. a 6:00 p.m., y sábados de 9:00 a.m. a 1:00 p.m. ¿Te ayudamos con algo más o quieres contactarnos por WhatsApp?",
+      precio: "Los precios varían según el servicio y el proyecto. Por ejemplo, pintura desde $30,000/m², soporte técnico desde $50,000, y diseño de interiores personalizado. ¿Quieres una cotización detallada por WhatsApp?",
+      servicios: "Ofrecemos diseño de interiores, soporte técnico (redes, PC, recuperación de datos), y pintura profesional con garantía. ¿Te interesa algún servicio en particular o quieres más detalles por WhatsApp?",
+      contacto: "Puedes contactarnos por WhatsApp al +57 304 2096459 o por correo a contacto@ycay360.com. ¿Prefieres que te llamemos o seguimos por WhatsApp?"
     }
   };
 
@@ -70,6 +77,13 @@ document.addEventListener('DOMContentLoaded', () => {
     sessionStorage.removeItem('chatbot_conversation');
   }
 
+  // VERIFICAR SI EL SALUDO YA FUE MOSTRADO EN LA SESIÓN
+  const greetingShown = sessionStorage.getItem('chatbot_greeting_shown');
+
+  // ESTADO DE LA CONVERSACIÓN PARA SEGUIMIENTO
+  let waitingForConfirmation = false;
+  let lastFaqType = null;
+
   // ASEGURAR QUE EL CHATBOT ESTÉ CERRADO INICIALMENTE
   chatbot.classList.remove('open');
   chatbot.classList.add('closed');
@@ -82,8 +96,13 @@ document.addEventListener('DOMContentLoaded', () => {
       chatbot.classList.remove('closed');
       chatbot.classList.add('open');
       openBtn.style.display = 'none';
-      if (body.children.length === 0) {
+      // Mostrar saludo solo si no se ha mostrado en la sesión y no hay mensajes previos
+      if (!greetingShown && conversacion.length === 0) {
         mostrarMensaje(r.saludo, 'bot');
+        sessionStorage.setItem('chatbot_greeting_shown', 'true');
+        console.log(`Saludo inicial mostrado en ${pagina}`);
+      } else {
+        console.log(`Saludo omitido en ${pagina}: ${greetingShown ? 'Saludo ya mostrado' : 'Conversación existente'}`);
       }
       console.log(`Chatbot abierto automáticamente en ${pagina}`);
     } catch (error) {
@@ -97,6 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
       chatbot.classList.remove('open');
       chatbot.classList.add('closed');
       openBtn.style.display = 'flex';
+      waitingForConfirmation = false; // Resetear estado al cerrar
+      lastFaqType = null;
       console.log(`Chatbot cerrado manualmente en ${pagina}, botón open-chat restaurado`);
     } catch (error) {
       console.error(`Error al cerrar el chatbot en ${pagina}:`, error);
@@ -109,8 +130,11 @@ document.addEventListener('DOMContentLoaded', () => {
       chatbot.classList.remove('closed');
       chatbot.classList.add('open');
       openBtn.style.display = 'none';
-      if (body.children.length === 0) {
+      // Mostrar saludo solo si no se ha mostrado y no hay conversación previa
+      if (!greetingShown && conversacion.length === 0) {
         mostrarMensaje(r.saludo, 'bot');
+        sessionStorage.setItem('chatbot_greeting_shown', 'true');
+        console.log(`Saludo inicial mostrado al abrir manualmente en ${pagina}`);
       }
       console.log(`Chatbot abierto manualmente en ${pagina}`);
     } catch (error) {
@@ -134,16 +158,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
       setTimeout(() => {
         let respuesta = r.default;
-
         const msg = userMsg.toLowerCase();
+
+        // Manejar respuestas de confirmación (por ejemplo, tras FAQ)
+        if (waitingForConfirmation && (msg.includes('sí') || msg.includes('si') || msg.includes('claro') || msg.includes('ok') || msg.includes('dale'))) {
+          respuesta = r.despedida;
+          mostrarBotonWhatsApp(pagina, lastFaqType);
+          waitingForConfirmation = false;
+          lastFaqType = null;
+          return;
+        }
+
+        // Resetear estado de confirmación si el usuario envía un mensaje nuevo
+        waitingForConfirmation = false;
+        lastFaqType = null;
+
+        // Respuestas basadas en palabras clave
         if (msg.includes('hola') || msg.includes('buenas') || msg.includes('saludos')) {
           respuesta = r.saludo;
+        } else if (msg.includes('ubicación') || msg.includes('ubicacion') || msg.includes('dónde') || msg.includes('donde') || msg.includes('están') || msg.includes('estan')) {
+          respuesta = respuestas.faq.ubicacion;
+          waitingForConfirmation = true;
+          lastFaqType = 'ubicacion';
+        } else if (msg.includes('horario') || msg.includes('hora') || msg.includes('abren')) {
+          respuesta = respuestas.faq.horario;
+          waitingForConfirmation = true;
+          lastFaqType = 'horario';
+        } else if (msg.includes('precio') || msg.includes('costo') || msg.includes('cuánto') || msg.includes('cuanto')) {
+          respuesta = respuestas.faq.precio;
+          waitingForConfirmation = true;
+          lastFaqType = 'precio';
+        } else if (msg.includes('servicio') || msg.includes('servicios') || msg.includes('qué hacen') || msg.includes('que hacen')) {
+          respuesta = respuestas.faq.servicios;
+          waitingForConfirmation = true;
+          lastFaqType = 'servicios';
+        } else if (msg.includes('contacto') || msg.includes('contactar') || msg.includes('teléfono') || msg.includes('telefono')) {
+          respuesta = respuestas.faq.contacto;
+          waitingForConfirmation = true;
+          lastFaqType = 'contacto';
+        } else if (msg.includes('m²') || msg.includes('metros')) {
+          respuesta = "¡Gracias por compartir! Por favor, confirma los m² de tu espacio y te prepararemos una cotización personalizada.";
+          waitingForConfirmation = true;
+          lastFaqType = 'cotizacion';
         } else if (msg.includes('sí') || msg.includes('si') || msg.includes('claro') || msg.includes('ok') || msg.includes('dale')) {
           respuesta = r.despedida;
           mostrarBotonWhatsApp(pagina);
           return;
-        } else if (msg.includes('m²') || msg.includes('metros')) {
-          respuesta = "¡Gracias por compartir! Por favor, confirma los m² de tu espacio y te prepararemos una cotización personalizada.";
         }
 
         mostrarMensaje(respuesta, 'bot');
@@ -180,21 +240,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // BOTÓN WHATSAPP
-  function mostrarBotonWhatsApp(pagina) {
+  function mostrarBotonWhatsApp(pagina, faqType = null) {
     const textos = {
       inicio: "Hola, vengo del chat de la página principal",
       interiores: "Hola, quiero cotizar diseño de interiores",
       soporte: "Hola, necesito soporte técnico",
-      pintura: "Hola, quiero cotizar pintura"
+      pintura: "Hola, quiero cotizar pintura",
+      ubicacion: "Hola, quiero más detalles sobre su ubicación en Bogotá",
+      horario: "Hola, quiero más detalles sobre sus horarios",
+      precio: "Hola, quiero una cotización detallada",
+      servicios: "Hola, quiero más información sobre sus servicios",
+      contacto: "Hola, quiero contactarlos",
+      cotizacion: "Hola, quiero una cotización para un proyecto de pintura"
     };
 
     try {
       sessionStorage.removeItem('chatbot_conversation');
-      console.log(`Conversación limpiada en sessionStorage para ${pagina}`);
+      sessionStorage.removeItem('chatbot_greeting_shown');
+      console.log(`Conversación y bandera de saludo limpiadas en sessionStorage para ${pagina}`);
       setTimeout(() => {
         const btn = document.createElement('div');
         btn.innerHTML = `
-          <a href="https://wa.me/573042096459?text=${encodeURIComponent(textos[pagina])}" 
+          <a href="https://wa.me/573042096459?text=${encodeURIComponent(textos[faqType || pagina])}" 
              target="_blank" 
              class="btn-whatsapp-chat">
             Continuar en WhatsApp
@@ -202,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         body.appendChild(btn);
         body.scrollTop = body.scrollHeight;
-        console.log(`Botón de WhatsApp mostrado en ${pagina}`);
+        console.log(`Botón de WhatsApp mostrado en ${pagina} para ${faqType || pagina}`);
 
         setTimeout(() => {
           chatbot.classList.remove('open');
