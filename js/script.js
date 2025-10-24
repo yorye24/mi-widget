@@ -1,4 +1,3 @@
-// js/script.js
 document.addEventListener('DOMContentLoaded', () => {
   const openBtn = document.getElementById('open-chat');
   const chatbot = document.getElementById('chatbot');
@@ -6,6 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('chat-form');
   const input = document.getElementById('chat-input');
   const body = document.getElementById('chat-body');
+  const nav = document.querySelector('.nav');
+  const toggle = document.querySelector('.header-inner');
+
+  // Establecer el año actual
+  document.querySelector('.current-year').textContent = new Date().getFullYear();
 
   // DETECTAR PÁGINA
   const pagina = document.body.dataset.page || 'inicio';
@@ -35,7 +39,25 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const r = respuestas[pagina];
-  let conversacion = [];
+
+  // CARGAR CONVERSACIÓN DESDE SESSIONSTORAGE
+  let conversacion = JSON.parse(sessionStorage.getItem('chatbot_conversation')) || [];
+  conversacion.forEach(msg => mostrarMensaje(msg.text, msg.type));
+
+  // ABRIR CHATBOT AUTOMÁTICAMENTE DESPUÉS DE 2 SEGUNDOS
+  setTimeout(() => {
+    chatbot.classList.add('open');
+    if (body.children.length === 0) {
+      mostrarMensaje(r.saludo, 'bot');
+    }
+    openBtn.style.display = 'none';
+  }, 2000);
+
+  // CERRAR
+  closeBtn.addEventListener('click', () => {
+    chatbot.classList.remove('open');
+    openBtn.style.display = 'flex';
+  });
 
   // ABRIR CHAT
   openBtn.addEventListener('click', () => {
@@ -43,11 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (body.children.length === 0) {
       mostrarMensaje(r.saludo, 'bot');
     }
-  });
-
-  // CERRAR
-  closeBtn.addEventListener('click', () => {
-    chatbot.classList.remove('open');
+    openBtn.style.display = 'none';
   });
 
   // ENVIAR MENSAJE
@@ -69,10 +87,17 @@ document.addEventListener('DOMContentLoaded', () => {
         respuesta = r.despedida;
         mostrarBotonWhatsApp(pagina);
         return;
+      } else if (msg.includes('m²') || msg.includes('metros')) {
+        respuesta = "¡Gracias por compartir! Por favor, confirma los m² de tu espacio y te prepararemos una cotización personalizada.";
       }
 
       mostrarMensaje(respuesta, 'bot');
     }, 800);
+  });
+
+  // NAVEGACIÓN MÓVIL
+  toggle.addEventListener('click', () => {
+    nav.classList.toggle('active');
   });
 
   // MOSTRAR MENSAJE
@@ -82,6 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
     msg.innerHTML = texto.replace(/\n/g, '<br>');
     body.appendChild(msg);
     body.scrollTop = body.scrollHeight;
+    conversacion.push({ text: texto, type: tipo });
+    sessionStorage.setItem('chatbot_conversation', JSON.stringify(conversacion));
   }
 
   // BOTÓN WHATSAPP
@@ -93,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
       pintura: "Hola, quiero cotizar pintura"
     };
 
+    sessionStorage.removeItem('chatbot_conversation');
     setTimeout(() => {
       const btn = document.createElement('div');
       btn.innerHTML = `
@@ -107,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       setTimeout(() => {
         chatbot.classList.remove('open');
+        openBtn.style.display = 'flex';
       }, 2000);
     }, 1000);
   }
