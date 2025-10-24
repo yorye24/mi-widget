@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Seleccionar elementos
   const openBtn = document.getElementById('open-chat');
   const chatbot = document.getElementById('chatbot');
   const closeBtn = document.getElementById('chat-close');
@@ -8,8 +9,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const nav = document.querySelector('.nav');
   const toggle = document.querySelector('.header-inner');
 
+  // Verificar que los elementos necesarios existan
+  if (!openBtn || !chatbot || !closeBtn || !form || !input || !body) {
+    console.error('Error: Uno o más elementos del chatbot no se encontraron en la página.');
+    return;
+  }
+
   // Establecer el año actual
-  document.querySelector('.current-year').textContent = new Date().getFullYear();
+  const currentYear = document.querySelector('.current-year');
+  if (currentYear) {
+    currentYear.textContent = new Date().getFullYear();
+  }
 
   // DETECTAR PÁGINA
   const pagina = document.body.dataset.page || 'inicio';
@@ -53,10 +63,15 @@ document.addEventListener('DOMContentLoaded', () => {
     openBtn.style.display = 'none';
   }, 2000);
 
-  // CERRAR
+  // CERRAR CHATBOT
   closeBtn.addEventListener('click', () => {
-    chatbot.classList.remove('open');
-    openBtn.style.display = 'flex';
+    try {
+      chatbot.classList.remove('open');
+      openBtn.style.display = 'flex';
+      console.log('Chatbot cerrado correctamente');
+    } catch (error) {
+      console.error('Error al cerrar el chatbot:', error);
+    }
   });
 
   // ABRIR CHAT
@@ -96,9 +111,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // NAVEGACIÓN MÓVIL
-  toggle.addEventListener('click', () => {
-    nav.classList.toggle('active');
-  });
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    });
+  }
 
   // MOSTRAR MENSAJE
   function mostrarMensaje(texto, tipo) {
