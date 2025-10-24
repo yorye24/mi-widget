@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Seleccionar elementos
   const openBtn = document.getElementById('open-chat');
   const chatbot = document.getElementById('chatbot');
   const closeBtn = document.getElementById('chat-close');
@@ -8,11 +9,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const nav = document.querySelector('.nav');
   const toggle = document.querySelector('.header-inner');
 
+  // Verificar que los elementos necesarios existan
+  if (!openBtn || !chatbot || !closeBtn || !form || !input || !body) {
+    console.error(`Error: Elementos del chatbot no encontrados en la página ${document.body.dataset.page || 'desconocida'}.`, {
+      openBtn: !!openBtn,
+      chatbot: !!chatbot,
+      closeBtn: !!closeBtn,
+      form: !!form,
+      input: !!input,
+      body: !!body
+    });
+    return;
+  }
+
   // Establecer el año actual
-  document.querySelector('.current-year').textContent = new Date().getFullYear();
+  const currentYear = document.querySelector('.current-year');
+  if (currentYear) {
+    currentYear.textContent = new Date().getFullYear();
+  }
 
   // DETECTAR PÁGINA
   const pagina = document.body.dataset.page || 'inicio';
+  console.log(`Página detectada: ${pagina}`);
 
   // RESPUESTAS POR PÁGINA
   const respuestas = {
@@ -51,21 +69,32 @@ document.addEventListener('DOMContentLoaded', () => {
       mostrarMensaje(r.saludo, 'bot');
     }
     openBtn.style.display = 'none';
+    console.log(`Chatbot abierto automáticamente en ${pagina}`);
   }, 2000);
 
-  // CERRAR
+  // CERRAR CHATBOT
   closeBtn.addEventListener('click', () => {
-    chatbot.classList.remove('open');
-    openBtn.style.display = 'flex';
+    try {
+      chatbot.classList.remove('open');
+      openBtn.style.display = 'flex';
+      console.log(`Chatbot cerrado en ${pagina}`);
+    } catch (error) {
+      console.error(`Error al cerrar el chatbot en ${pagina}:`, error);
+    }
   });
 
   // ABRIR CHAT
   openBtn.addEventListener('click', () => {
-    chatbot.classList.add('open');
-    if (body.children.length === 0) {
-      mostrarMensaje(r.saludo, 'bot');
+    try {
+      chatbot.classList.add('open');
+      if (body.children.length === 0) {
+        mostrarMensaje(r.saludo, 'bot');
+      }
+      openBtn.style.display = 'none';
+      console.log(`Chatbot abierto manualmente en ${pagina}`);
+    } catch (error) {
+      console.error(`Error al abrir el chatbot en ${pagina}:`, error);
     }
-    openBtn.style.display = 'none';
   });
 
   // ENVIAR MENSAJE
@@ -96,19 +125,27 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // NAVEGACIÓN MÓVIL
-  toggle.addEventListener('click', () => {
-    nav.classList.toggle('active');
-  });
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('active');
+      console.log('Navegación móvil toggled');
+    });
+  }
 
   // MOSTRAR MENSAJE
   function mostrarMensaje(texto, tipo) {
-    const msg = document.createElement('div');
-    msg.classList.add(tipo === 'bot' ? 'bot-msg' : 'user-msg');
-    msg.innerHTML = texto.replace(/\n/g, '<br>');
-    body.appendChild(msg);
-    body.scrollTop = body.scrollHeight;
-    conversacion.push({ text: texto, type: tipo });
-    sessionStorage.setItem('chatbot_conversation', JSON.stringify(conversacion));
+    try {
+      const msg = document.createElement('div');
+      msg.classList.add(tipo === 'bot' ? 'bot-msg' : 'user-msg');
+      msg.innerHTML = texto.replace(/\n/g, '<br>');
+      body.appendChild(msg);
+      body.scrollTop = body.scrollHeight;
+      conversacion.push({ text: texto, type: tipo });
+      sessionStorage.setItem('chatbot_conversation', JSON.stringify(conversacion));
+      console.log(`Mensaje ${tipo} añadido en ${pagina}`);
+    } catch (error) {
+      console.error(`Error al mostrar mensaje en ${pagina}:`, error);
+    }
   }
 
   // BOTÓN WHATSAPP
@@ -120,23 +157,29 @@ document.addEventListener('DOMContentLoaded', () => {
       pintura: "Hola, quiero cotizar pintura"
     };
 
-    sessionStorage.removeItem('chatbot_conversation');
-    setTimeout(() => {
-      const btn = document.createElement('div');
-      btn.innerHTML = `
-        <a href="https://wa.me/573042096459?text=${encodeURIComponent(textos[pagina])}" 
-           target="_blank" 
-           class="btn-whatsapp-chat">
-          Continuar en WhatsApp
-        </a>
-      `;
-      body.appendChild(btn);
-      body.scrollTop = body.scrollHeight;
-
+    try {
+      sessionStorage.removeItem('chatbot_conversation');
       setTimeout(() => {
-        chatbot.classList.remove('open');
-        openBtn.style.display = 'flex';
-      }, 2000);
-    }, 1000);
+        const btn = document.createElement('div');
+        btn.innerHTML = `
+          <a href="https://wa.me/573042096459?text=${encodeURIComponent(textos[pagina])}" 
+             target="_blank" 
+             class="btn-whatsapp-chat">
+            Continuar en WhatsApp
+          </a>
+        `;
+        body.appendChild(btn);
+        body.scrollTop = body.scrollHeight;
+        console.log(`Botón de WhatsApp mostrado en ${pagina}`);
+
+        setTimeout(() => {
+          chatbot.classList.remove('open');
+          openBtn.style.display = 'flex';
+          console.log(`Chatbot cerrado tras redirigir a WhatsApp en ${pagina}`);
+        }, 2000);
+      }, 1000);
+    } catch (error) {
+      console.error(`Error al mostrar el botón de WhatsApp en ${pagina}:`, error);
+    }
   }
 });
