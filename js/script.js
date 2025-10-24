@@ -56,9 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
       despedida: "¡Listo! Te redirigimos..."
     },
     faq: {
-      ubicacion: "Estamos ubicados en Bello, Colombia. ¿Quieres que te demos más detalles por WhatsApp?",
-      horario: "Nuestro horario es de lunes a viernes de 8:00 a.m. a 5:00 p.m., y sábados de 8:00 a.m. a 1:00 p.m. ¿Te ayudamos con algo más o quieres contactarnos por WhatsApp?",
-      precio: "Los precios varían según el servicio y el proyecto. Por ejemplo, pintura desde $27,000/m², soporte técnico desde $50,000, y diseño de interiores personalizado. ¿Quieres una cotización detallada por WhatsApp?",
+      ubicacion: "Estamos ubicados en Bogotá, Colombia. ¿Quieres que te demos más detalles por WhatsApp?",
+      horario: "Nuestro horario es de lunes a viernes de 8:00 a.m. a 6:00 p.m., y sábados de 9:00 a.m. a 1:00 p.m. ¿Te ayudamos con algo más o quieres contactarnos por WhatsApp?",
+      precio: "Los precios varían según el servicio y el proyecto. Por ejemplo, pintura desde $30,000/m², soporte técnico desde $50,000, y diseño de interiores personalizado. ¿Quieres una cotización detallada por WhatsApp?",
       servicios: "Ofrecemos diseño de interiores, soporte técnico (redes, PC, recuperación de datos), y pintura profesional con garantía. ¿Te interesa algún servicio en particular o quieres más detalles por WhatsApp?",
       contacto: "Puedes contactarnos por WhatsApp al +57 304 2096459 o por correo a contacto@ycay360.com. ¿Prefieres que te llamemos o seguimos por WhatsApp?"
     }
@@ -66,12 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const r = respuestas[pagina];
 
-  // CARGAR CONVERSACIÓN DESDE SESSIONSTORAGE
+  // CARGAR CONVERSACIÓN DESDE SESSIONSTORAGE (SIN MOSTRAR AÚN)
   let conversacion = [];
   try {
     conversacion = JSON.parse(sessionStorage.getItem('chatbot_conversation')) || [];
-    conversacion.forEach(msg => mostrarMensaje(msg.text, msg.type));
-    console.log(`Conversación cargada desde sessionStorage: ${conversacion.length} mensajes`);
+    console.log(`Conversación cargada desde sessionStorage: ${conversacion.length} mensajes, esperando interacción para mostrar`);
   } catch (error) {
     console.error('Error al cargar conversación desde sessionStorage:', error);
     sessionStorage.removeItem('chatbot_conversation');
@@ -90,21 +89,13 @@ document.addEventListener('DOMContentLoaded', () => {
   openBtn.style.display = 'flex';
   console.log(`Chatbot inicializado como cerrado en ${pagina}, botón open-chat visible`);
 
-  // ABRIR CHATBOT AUTOMÁTICAMENTE DESPUÉS DE 2 SEGUNDOS
+  // ABRIR CHATBOT AUTOMÁTICAMENTE DESPUÉS DE 2 SEGUNDOS (SIN MENSAJES)
   setTimeout(() => {
     try {
       chatbot.classList.remove('closed');
       chatbot.classList.add('open');
       openBtn.style.display = 'none';
-      // Mostrar saludo solo si no se ha mostrado en la sesión y no hay mensajes previos
-      if (!greetingShown && conversacion.length === 0) {
-        mostrarMensaje(r.saludo, 'bot');
-        sessionStorage.setItem('chatbot_greeting_shown', 'true');
-        console.log(`Saludo inicial mostrado en ${pagina}`);
-      } else {
-        console.log(`Saludo omitido en ${pagina}: ${greetingShown ? 'Saludo ya mostrado' : 'Conversación existente'}`);
-      }
-      console.log(`Chatbot abierto automáticamente en ${pagina}`);
+      console.log(`Chatbot abierto automáticamente en ${pagina}, sin mostrar mensajes`);
     } catch (error) {
       console.error(`Error al abrir el chatbot automáticamente en ${pagina}:`, error);
     }
@@ -130,8 +121,12 @@ document.addEventListener('DOMContentLoaded', () => {
       chatbot.classList.remove('closed');
       chatbot.classList.add('open');
       openBtn.style.display = 'none';
-      // Mostrar saludo solo si no se ha mostrado y no hay conversación previa
-      if (!greetingShown && conversacion.length === 0) {
+      // Mostrar conversación previa o saludo solo al abrir manualmente
+      if (conversacion.length > 0) {
+        body.innerHTML = ''; // Limpiar el cuerpo para evitar duplicados
+        conversacion.forEach(msg => mostrarMensaje(msg.text, msg.type));
+        console.log(`Conversación previa mostrada en ${pagina}: ${conversacion.length} mensajes`);
+      } else if (!greetingShown) {
         mostrarMensaje(r.saludo, 'bot');
         sessionStorage.setItem('chatbot_greeting_shown', 'true');
         console.log(`Saludo inicial mostrado al abrir manualmente en ${pagina}`);
@@ -155,6 +150,14 @@ document.addEventListener('DOMContentLoaded', () => {
       mostrarMensaje(userMsg, 'user');
       input.value = '';
       console.log(`Mensaje de usuario enviado en ${pagina}: ${userMsg}`);
+
+      // Mostrar conversación previa o saludo si es la primera interacción
+      if (conversacion.length === 1 && !greetingShown) {
+        mostrarMensaje(r.saludo, 'bot');
+        sessionStorage.setItem('chatbot_greeting_shown', 'true');
+        console.log(`Saludo inicial mostrado tras primera interacción en ${pagina}`);
+        return;
+      }
 
       setTimeout(() => {
         let respuesta = r.default;
@@ -283,4 +286,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 });
-
