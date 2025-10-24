@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const currentYear = document.querySelector('.current-year');
   if (currentYear) {
     currentYear.textContent = new Date().getFullYear();
+    console.log('Año actual establecido:', currentYear.textContent);
   }
 
   // DETECTAR PÁGINA
@@ -59,23 +60,35 @@ document.addEventListener('DOMContentLoaded', () => {
   const r = respuestas[pagina];
 
   // CARGAR CONVERSACIÓN DESDE SESSIONSTORAGE
-  let conversacion = JSON.parse(sessionStorage.getItem('chatbot_conversation')) || [];
-  conversacion.forEach(msg => mostrarMensaje(msg.text, msg.type));
+  let conversacion = [];
+  try {
+    conversacion = JSON.parse(sessionStorage.getItem('chatbot_conversation')) || [];
+    conversacion.forEach(msg => mostrarMensaje(msg.text, msg.type));
+    console.log(`Conversación cargada desde sessionStorage: ${conversacion.length} mensajes`);
+  } catch (error) {
+    console.error('Error al cargar conversación desde sessionStorage:', error);
+    sessionStorage.removeItem('chatbot_conversation');
+  }
 
   // ASEGURAR QUE EL CHATBOT ESTÉ CERRADO INICIALMENTE
+  chatbot.classList.remove('open');
   chatbot.classList.add('closed');
   openBtn.style.display = 'flex';
-  console.log(`Chatbot inicializado como cerrado en ${pagina}`);
+  console.log(`Chatbot inicializado como cerrado en ${pagina}, botón open-chat visible`);
 
   // ABRIR CHATBOT AUTOMÁTICAMENTE DESPUÉS DE 2 SEGUNDOS
   setTimeout(() => {
-    chatbot.classList.remove('closed');
-    chatbot.classList.add('open');
-    if (body.children.length === 0) {
-      mostrarMensaje(r.saludo, 'bot');
+    try {
+      chatbot.classList.remove('closed');
+      chatbot.classList.add('open');
+      openBtn.style.display = 'none';
+      if (body.children.length === 0) {
+        mostrarMensaje(r.saludo, 'bot');
+      }
+      console.log(`Chatbot abierto automáticamente en ${pagina}`);
+    } catch (error) {
+      console.error(`Error al abrir el chatbot automáticamente en ${pagina}:`, error);
     }
-    openBtn.style.display = 'none';
-    console.log(`Chatbot abierto automáticamente en ${pagina}`);
   }, 2000);
 
   // CERRAR CHATBOT
@@ -95,10 +108,10 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       chatbot.classList.remove('closed');
       chatbot.classList.add('open');
+      openBtn.style.display = 'none';
       if (body.children.length === 0) {
         mostrarMensaje(r.saludo, 'bot');
       }
-      openBtn.style.display = 'none';
       console.log(`Chatbot abierto manualmente en ${pagina}`);
     } catch (error) {
       console.error(`Error al abrir el chatbot en ${pagina}:`, error);
@@ -108,31 +121,98 @@ document.addEventListener('DOMContentLoaded', () => {
   // ENVIAR MENSAJE
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    if (!input.value.trim()) return;
+    if (!input.value.trim()) {
+      console.log('Entrada vacía, mensaje no enviado');
+      return;
+    }
 
-    const userMsg = input.value.trim();
-    mostrarMensaje(userMsg, 'user');
-    input.value = '';
+    try {
+      const userMsg = input.value.trim();
+      mostrarMensaje(userMsg, 'user');
+      input.value = '';
+      console.log(`Mensaje de usuario enviado en ${pagina}: ${userMsg}`);
 
-    setTimeout(() => {
-      let respuesta = r.default;
+      setTimeout(() => {
+        let respuesta = r.default;
 
-      const msg = userMsg.toLowerCase();
-      if (msg.includes('hola') || msg.includes('buenas') || msg.includes('saludos')) {
-        respuesta = r.saludo;
-      } else if (msg.includes('sí') || msg.includes('si') || msg.includes('claro') || msg.includes('ok') || msg.includes('dale')) {
-        respuesta = r.despedida;
-        mostrarBotonWhatsApp(pagina);
-        return;
-      } else if (msg.includes('m²') || msg.includes('metros')) {
-        respuesta = "¡Gracias por compartir! Por favor, confirma los m² de tu espacio y te prepararemos una cotización personalizada.";
-      }
+        const msg = userMsg.toLowerCase();
+        if (msg.includes('hola') || msg.includes('buenas') || msg.includes('saludos')) {
+          respuesta = r.saludo;
+        } else if (msg.includes('sí') || msg.includes('si') || msg.includes('claro') || msg.includes('ok') || msg.includes('dale')) {
+          respuesta = r.despedida;
+          mostrarBotonWhatsApp(pagina);
+          return;
+        } else if (msg.includes('m²') || msg.includes('metros')) {
+          respuesta = "¡Gracias por compartir! Por favor, confirma los m² de tu espacio y te prepararemos una cotización personalizada.";
+        }
 
-      mostrarMensaje(respuesta, 'bot');
-    }, 800);
+        mostrarMensaje(respuesta, 'bot');
+      }, 800);
+    } catch (error) {
+      console.error(`Error al procesar el mensaje del usuario en ${pagina}:`, error);
+    }
   });
 
   // NAVEGACIÓN MÓVIL
   if (toggle && nav) {
-    toggle.addEventListener('click', () => {
-      nav.classList
+    toggle.addEventListener('click', (e) => {
+      if (e.target === toggle.querySelector('.header-inner::after') || toggle.contains(e.target)) {
+        nav.classList.toggle('active');
+        console.log(`Navegación móvil toggled en ${pagina}`);
+      }
+    });
+  }
+
+  // MOSTRAR MENSAJE
+  function mostrarMensaje(texto, tipo) {
+    try {
+      const msg = document.createElement('div');
+      msg.classList.add(tipo === 'bot' ? 'bot-msg' : 'user-msg');
+      msg.innerHTML = texto.replace(/\n/g, '<br>');
+      body.appendChild(msg);
+      body.scrollTop = body.scrollHeight;
+      conversacion.push({ text: texto, type: tipo });
+      sessionStorage.setItem('chatbot_conversation', JSON.stringify(conversacion));
+      console.log(`Mensaje ${tipo} añadido en ${pagina}: ${texto}`);
+    } catch (error) {
+      console.error(`Error al mostrar mensaje en ${pagina}:`, error);
+    }
+  }
+
+  // BOTÓN WHATSAPP
+  function mostrarBotonWhatsApp(pagina) {
+    const textos = {
+      inicio: "Hola, vengo del chat de la página principal",
+      interiores: "Hola, quiero cotizar diseño de interiores",
+      soporte: "Hola, necesito soporte técnico",
+      pintura: "Hola, quiero cotizar pintura"
+    };
+
+    try {
+      sessionStorage.removeItem('chatbot_conversation');
+      console.log(`Conversación limpiada en sessionStorage para ${pagina}`);
+      setTimeout(() => {
+        const btn = document.createElement('div');
+        btn.innerHTML = `
+          <a href="https://wa.me/573042096459?text=${encodeURIComponent(textos[pagina])}" 
+             target="_blank" 
+             class="btn-whatsapp-chat">
+            Continuar en WhatsApp
+          </a>
+        `;
+        body.appendChild(btn);
+        body.scrollTop = body.scrollHeight;
+        console.log(`Botón de WhatsApp mostrado en ${pagina}`);
+
+        setTimeout(() => {
+          chatbot.classList.remove('open');
+          chatbot.classList.add('closed');
+          openBtn.style.display = 'flex';
+          console.log(`Chatbot cerrado tras redirigir a WhatsApp en ${pagina}, botón open-chat restaurado`);
+        }, 2000);
+      }, 1000);
+    } catch (error) {
+      console.error(`Error al mostrar el botón de WhatsApp en ${pagina}:`, error);
+    }
+  }
+});
