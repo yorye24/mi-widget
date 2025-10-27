@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <link rel="preload" href="assets/logo-ycay360.png" as="image">
-  <link rel="preload" href="assets/logo-ycay360.png" as="image">
+  <link rel="preload" href="assets/hero-bg.png" as="image"> <!-- Preload para la imagen PNG del hero -->
 </head>
 <body data-page="inicio">
 
@@ -16,11 +16,11 @@
   <header class="site-header">
     <div class="container header-inner">
       <a href="index.html" class="brand">
-        <img src="assets/logo-ycay360.png" alt="Ycay360" class="logo" onerror="this.style.display='none'">
-        <span class="brand-text">Ycay360</span>
+        <img src="assets/logo-ycay360.png" alt="Ycay360" class="logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+        <span class="brand-text" style="display: none;">Ycay360</span>
       </a>
       <nav class="nav">
-        <a href="index.html">Inicio</a>
+        <a href="index.html" class="active">Inicio</a>
         <a href="servicios.html">Servicios Hogar</a>
         <a href="soporte.html">Soporte TIC</a>
         <a href="pintura.html">Pintura</a>
@@ -28,11 +28,8 @@
     </div>
   </header>
 
-  <!-- HERO CON VIDEO DE FONDO -->
-  <section class="page-hero" style="background-image: url('assets/hero-fallback.jpg');">
-    <video class="hero-bg-video" autoplay loop muted playsinline preload="auto">
-      <source src="assets/logo-ycay360.png" type="image">
-    </video>
+  <!-- HERO CON IMAGEN PNG DE FONDO -->
+  <section class="page-hero" style="background-image: url('assets/logo-ycay360.png');">
     <div class="hero-overlay"></div>
     <div class="container hero-content">
       <h1>Soluciones integrales para tu espacio y tu tecnología</h1>
@@ -54,7 +51,7 @@
   <!-- SERVICIOS MEJORADOS -->
   <section class="services" id="servicios">
     <div class="container">
-      <h2>Nuestros servicios</h2>
+      <h2 style="text-align: center; color: inherit; font-weight: 700; font-size: 2.5rem; margin-bottom: 3rem;">Nuestros servicios</h2>
       <div class="cards">
         
         <!-- SERVICIOS HOGAR -->
@@ -168,7 +165,3 @@
   <script src="js/script.js"></script>
 </body>
 </html>
-
-
-
-
