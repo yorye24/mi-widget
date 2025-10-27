@@ -753,3 +753,48 @@ img {
 a {
   text-decoration: none;
 }
+
+/* Mejoras para Hero: Menos tapa en la imagen */
+.hero-overlay {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.1) 100%); /* Gradiente más claro abajo para mostrar más imagen */
+}
+
+.hero-content h1 {
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.8); /* Sombra extra para resaltar texto sin oscurecer más */
+  font-size: clamp(2.5rem, 5vw, 3.5rem); /* Responsivo: más pequeño en móviles */
+}
+
+.hero-bullets {
+  flex-direction: column; /* Apila verticalmente para menos ancho y mejor legibilidad */
+  align-items: center;
+  gap: 8px; /* Menos espacio entre bullets */
+  margin: 1.5rem 0; /* Reduce margen total */
+}
+
+.hero-bullets span {
+  padding: 8px 16px; /* Bullets más compactos */
+  font-size: 0.95rem;
+}
+
+/* En móviles, hero más compacto */
+@media (max-width: 768px) {
+  .page-hero {
+    min-height: 70vh; /* Hero más corto en móvil para no tapar scroll */
+  }
+  
+  .hero-bullets {
+    flex-direction: row; /* Horizontal en móvil pequeño si cabe, o mantén column */
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  
+  .hero-cta {
+    flex-direction: column; /* Botones apilados en móvil */
+    align-items: center;
+  }
+  
+  .btn {
+    width: 100%;
+    max-width: 250px;
+  }
+}
