@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
       despedida: "¡Excelente! Te conectamos ahora..."
     },
     pintura: {
-      saludo: "¡Hola! Estás en **Pintura Profesional**.\n\nIncluye:\n• Preparación de superficies\n• Pinturas premium\n• Acabados perfectos\n• Garantía de 1 año\n\n¿Quieres una cotización personalizada?",
+      saludo: "¡Hola! Estás en **Pintura Profesional**.\n\nIncluye:\n• Preparación de superficies\n• Pinturas premium\n• Acabados perfectos\n• Garantías\n\n¿Quieres una cotización personalizada?",
       default: "Perfecto. Un pintor experto te escribirá por WhatsApp.\n\n¿Seguimos?",
       despedida: "¡Listo! Te redirigimos..."
     },
@@ -360,3 +360,4 @@ document.addEventListener('DOMContentLoaded', () => {
   // Iniciar timer de inactividad inicial si el chat se abre auto
   resetInactivityTimers();
 });
+
