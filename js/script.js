@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pagina = document.body.dataset.page || 'inicio';
   console.log(`Página detectada: ${pagina}`);
 
-  // RESPUESTAS POR PÁGINA Y FAQ
+  // RESPUESTAS POR PÁGINA Y FAQ (sin precios)
   const respuestas = {
     inicio: {
       saludo: "¡Hola! Bienvenido a Ycay360. Ofrecemos:\n• Diseño de interiores\n• Soporte técnico\n• Pintura profesional\n\n¿Cuál te interesa?",
@@ -56,9 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
       despedida: "¡Listo! Te redirigimos..."
     },
     faq: {
-      ubicacion: "Estamos ubicados en Bogotá, Colombia. ¿Quieres que te demos más detalles por WhatsApp?",
+      ubicacion: "Estamos ubicados en Bello, Colombia. ¿Quieres que te demos más detalles por WhatsApp?",
       horario: "Nuestro horario es de lunes a viernes de 8:00 a.m. a 6:00 p.m., y sábados de 9:00 a.m. a 1:00 p.m. ¿Te ayudamos con algo más o quieres contactarnos por WhatsApp?",
-      precio: "Los precios varían según el servicio y el proyecto. Por ejemplo, pintura desde $30,000/m², soporte técnico desde $50,000, y diseño de interiores personalizado. ¿Quieres una cotización detallada por WhatsApp?",
+      precio: "Los precios varían según el servicio y el proyecto. ¿Quieres una cotización detallada por WhatsApp?",
       servicios: "Ofrecemos diseño de interiores, soporte técnico (redes, PC, recuperación de datos), y pintura profesional con garantía. ¿Te interesa algún servicio en particular o quieres más detalles por WhatsApp?",
       contacto: "Puedes contactarnos por WhatsApp al +57 304 2096459 o por correo a contacto@ycay360.com. ¿Prefieres que te llamemos o seguimos por WhatsApp?"
     }
@@ -66,22 +66,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const r = respuestas[pagina];
 
-  // CARGAR CONVERSACIÓN DESDE SESSIONSTORAGE (SIN MOSTRAR AÚN)
+  // CARGAR CONVERSACIÓN Y ESTADO DESDE SESSIONSTORAGE
   let conversacion = [];
+  let currentState = sessionStorage.getItem('chat_state') || 'inicio';
   try {
     conversacion = JSON.parse(sessionStorage.getItem('chatbot_conversation')) || [];
-    console.log(`Conversación cargada desde sessionStorage: ${conversacion.length} mensajes, esperando interacción para mostrar`);
+    console.log(`Conversación cargada desde sessionStorage: ${conversacion.length} mensajes, estado: ${currentState}`);
   } catch (error) {
     console.error('Error al cargar conversación desde sessionStorage:', error);
     sessionStorage.removeItem('chatbot_conversation');
+    sessionStorage.removeItem('chat_state');
+    currentState = 'inicio';
   }
 
   // VERIFICAR SI EL SALUDO YA FUE MOSTRADO EN LA SESIÓN
   const greetingShown = sessionStorage.getItem('chatbot_greeting_shown');
 
-  // ESTADO DE LA CONVERSACIÓN PARA SEGUIMIENTO
-  let waitingForConfirmation = false;
-  let lastFaqType = null;
+  // TIMERS PARA INACTIVIDAD
+  let inactivityTimer;
+  let resetTimer;
+
+  // Función para resetear timers
+  function resetInactivityTimers() {
+    clearTimeout(inactivityTimer);
+    clearTimeout(resetTimer);
+    inactivityTimer = setTimeout(() => {
+      if (currentState !== 'despedida') {
+        mostrarMensaje('Hola, ¿sigues ahí?', 'bot');
+        currentState = 'esperando_respuesta_inactividad';
+        sessionStorage.setItem('chat_state', currentState);
+        resetTimer = setTimeout(resetChat, 60000); // 1 min para responder, luego reset
+      }
+    }, 120000); // 2 min de inactividad
+  }
+
+  // Función para resetear el chat por inactividad
+  function resetChat() {
+    conversacion = [];
+    body.innerHTML = '';
+    currentState = 'inicio';
+    sessionStorage.removeItem('chatbot_conversation');
+    sessionStorage.removeItem('chatbot_greeting_shown');
+    sessionStorage.setItem('chat_state', currentState);
+    mostrarMensaje('Chat reiniciado por inactividad. ¡Hola de nuevo!', 'bot');
+    console.log('Chat reiniciado por inactividad');
+  }
 
   // ASEGURAR QUE EL CHATBOT ESTÉ CERRADO INICIALMENTE
   chatbot.classList.remove('open');
@@ -107,8 +136,10 @@ document.addEventListener('DOMContentLoaded', () => {
       chatbot.classList.remove('open');
       chatbot.classList.add('closed');
       openBtn.style.display = 'flex';
-      waitingForConfirmation = false; // Resetear estado al cerrar
-      lastFaqType = null;
+      currentState = 'inicio'; // Resetear estado al cerrar
+      sessionStorage.setItem('chat_state', currentState);
+      clearTimeout(inactivityTimer);
+      clearTimeout(resetTimer);
       console.log(`Chatbot cerrado manualmente en ${pagina}, botón open-chat restaurado`);
     } catch (error) {
       console.error(`Error al cerrar el chatbot en ${pagina}:`, error);
@@ -121,21 +152,101 @@ document.addEventListener('DOMContentLoaded', () => {
       chatbot.classList.remove('closed');
       chatbot.classList.add('open');
       openBtn.style.display = 'none';
-      // Mostrar conversación previa o saludo solo al abrir manualmente
+      // Mostrar conversación previa
       if (conversacion.length > 0) {
         body.innerHTML = ''; // Limpiar el cuerpo para evitar duplicados
         conversacion.forEach(msg => mostrarMensaje(msg.text, msg.type));
         console.log(`Conversación previa mostrada en ${pagina}: ${conversacion.length} mensajes`);
-      } else if (!greetingShown) {
+      }
+      if (currentState === 'inicio' && !greetingShown) {
         mostrarMensaje(r.saludo, 'bot');
         sessionStorage.setItem('chatbot_greeting_shown', 'true');
-        console.log(`Saludo inicial mostrado al abrir manualmente en ${pagina}`);
+        currentState = 'esperando_respuesta';
+        sessionStorage.setItem('chat_state', currentState);
       }
-      console.log(`Chatbot abierto manualmente en ${pagina}`);
+      resetInactivityTimers();
+      console.log(`Chatbot abierto manualmente en ${pagina}, estado: ${currentState}`);
     } catch (error) {
       console.error(`Error al abrir el chatbot en ${pagina}:`, error);
     }
   });
+
+  // DEFINIR MÁQUINA DE ESTADOS
+  const states = {
+    inicio: (input, page) => {
+      const r = respuestas[page];
+      let respuesta = r.saludo;
+      sessionStorage.setItem('chatbot_greeting_shown', 'true');
+      currentState = 'esperando_respuesta';
+      return respuesta;
+    },
+    esperando_respuesta: (input, page) => {
+      const r = respuestas[page];
+      const msg = input.toLowerCase();
+      let respuesta = r.default;
+      let faqType = null;
+
+      if (msg.includes('hola') || msg.includes('buenas') || msg.includes('saludos')) {
+        respuesta = r.saludo;
+      } else if (msg.includes('ubicación') || msg.includes('ubicacion') || msg.includes('dónde') || msg.includes('donde') || msg.includes('están') || msg.includes('estan')) {
+        respuesta = respuestas.faq.ubicacion;
+        faqType = 'ubicacion';
+      } else if (msg.includes('horario') || msg.includes('hora') || msg.includes('abren')) {
+        respuesta = respuestas.faq.horario;
+        faqType = 'horario';
+      } else if (msg.includes('precio') || msg.includes('costo') || msg.includes('cuánto') || msg.includes('cuanto')) {
+        respuesta = respuestas.faq.precio;
+        faqType = 'precio';
+      } else if (msg.includes('servicio') || msg.includes('servicios') || msg.includes('qué hacen') || msg.includes('que hacen')) {
+        respuesta = respuestas.faq.servicios;
+        faqType = 'servicios';
+      } else if (msg.includes('contacto') || msg.includes('contactar') || msg.includes('teléfono') || msg.includes('telefono')) {
+        respuesta = respuestas.faq.contacto;
+        faqType = 'contacto';
+      } else if (msg.includes('m²') || msg.includes('metros')) {
+        respuesta = "¡Gracias por compartir! Por favor, confirma los m² de tu espacio y te prepararemos una cotización personalizada.";
+        faqType = 'cotizacion';
+      } else if (msg.includes('sí') || msg.includes('si') || msg.includes('claro') || msg.includes('ok') || msg.includes('dale')) {
+        respuesta = r.despedida;
+        currentState = 'despedida';
+        mostrarBotonWhatsApp(page);
+        return respuesta;
+      }
+
+      if (faqType) {
+        currentState = 'esperando_confirmacion';
+      } else {
+        currentState = 'esperando_respuesta';
+      }
+      sessionStorage.setItem('chat_state', currentState);
+      sessionStorage.setItem('last_faq_type', faqType);
+      return respuesta;
+    },
+    esperando_confirmacion: (input, page) => {
+      const r = respuestas[page];
+      const msg = input.toLowerCase();
+      const lastFaqType = sessionStorage.getItem('last_faq_type');
+
+      if (msg.includes('sí') || msg.includes('si') || msg.includes('claro') || msg.includes('ok') || msg.includes('dale')) {
+        const respuesta = r.despedida;
+        currentState = 'despedida';
+        mostrarBotonWhatsApp(page, lastFaqType);
+        sessionStorage.removeItem('last_faq_type');
+        return respuesta;
+      } else {
+        currentState = 'esperando_respuesta';
+        return states['esperando_respuesta'](input, page);
+      }
+    },
+    esperando_respuesta_inactividad: (input, page) => {
+      // Si responde, continua normal
+      currentState = 'esperando_respuesta';
+      return states['esperando_respuesta'](input, page);
+    },
+    despedida: (input, page) => {
+      return '¡Gracias por chatear! Si necesitas más, abre el chat de nuevo.';
+    }
+  };
 
   // ENVIAR MENSAJE
   form.addEventListener('submit', (e) => {
@@ -151,75 +262,23 @@ document.addEventListener('DOMContentLoaded', () => {
       input.value = '';
       console.log(`Mensaje de usuario enviado en ${pagina}: ${userMsg}`);
 
-      // Mostrar conversación previa o saludo si es la primera interacción
-      if (conversacion.length === 1 && !greetingShown) {
-        mostrarMensaje(r.saludo, 'bot');
-        sessionStorage.setItem('chatbot_greeting_shown', 'true');
-        console.log(`Saludo inicial mostrado tras primera interacción en ${pagina}`);
-        return;
-      }
-
+      // Procesar con máquina de estados
       setTimeout(() => {
-        let respuesta = r.default;
-        const msg = userMsg.toLowerCase();
-
-        // Manejar respuestas de confirmación (por ejemplo, tras FAQ)
-        if (waitingForConfirmation && (msg.includes('sí') || msg.includes('si') || msg.includes('claro') || msg.includes('ok') || msg.includes('dale'))) {
-          respuesta = r.despedida;
-          mostrarBotonWhatsApp(pagina, lastFaqType);
-          waitingForConfirmation = false;
-          lastFaqType = null;
-          return;
-        }
-
-        // Resetear estado de confirmación si el usuario envía un mensaje nuevo
-        waitingForConfirmation = false;
-        lastFaqType = null;
-
-        // Respuestas basadas en palabras clave
-        if (msg.includes('hola') || msg.includes('buenas') || msg.includes('saludos')) {
-          respuesta = r.saludo;
-        } else if (msg.includes('ubicación') || msg.includes('ubicacion') || msg.includes('dónde') || msg.includes('donde') || msg.includes('están') || msg.includes('estan')) {
-          respuesta = respuestas.faq.ubicacion;
-          waitingForConfirmation = true;
-          lastFaqType = 'ubicacion';
-        } else if (msg.includes('horario') || msg.includes('hora') || msg.includes('abren')) {
-          respuesta = respuestas.faq.horario;
-          waitingForConfirmation = true;
-          lastFaqType = 'horario';
-        } else if (msg.includes('precio') || msg.includes('costo') || msg.includes('cuánto') || msg.includes('cuanto')) {
-          respuesta = respuestas.faq.precio;
-          waitingForConfirmation = true;
-          lastFaqType = 'precio';
-        } else if (msg.includes('servicio') || msg.includes('servicios') || msg.includes('qué hacen') || msg.includes('que hacen')) {
-          respuesta = respuestas.faq.servicios;
-          waitingForConfirmation = true;
-          lastFaqType = 'servicios';
-        } else if (msg.includes('contacto') || msg.includes('contactar') || msg.includes('teléfono') || msg.includes('telefono')) {
-          respuesta = respuestas.faq.contacto;
-          waitingForConfirmation = true;
-          lastFaqType = 'contacto';
-        } else if (msg.includes('m²') || msg.includes('metros')) {
-          respuesta = "¡Gracias por compartir! Por favor, confirma los m² de tu espacio y te prepararemos una cotización personalizada.";
-          waitingForConfirmation = true;
-          lastFaqType = 'cotizacion';
-        } else if (msg.includes('sí') || msg.includes('si') || msg.includes('claro') || msg.includes('ok') || msg.includes('dale')) {
-          respuesta = r.despedida;
-          mostrarBotonWhatsApp(pagina);
-          return;
-        }
-
+        let respuesta = states[currentState](userMsg, pagina);
         mostrarMensaje(respuesta, 'bot');
+        sessionStorage.setItem('chat_state', currentState);
+        resetInactivityTimers();
       }, 800);
     } catch (error) {
       console.error(`Error al procesar el mensaje del usuario en ${pagina}:`, error);
     }
   });
 
-  // NAVEGACIÓN MÓVIL
+  // NAVEGACIÓN MÓVIL (corregido para pseudo-elemento, asumiendo que el toggle es el contenedor)
   if (toggle && nav) {
     toggle.addEventListener('click', (e) => {
-      if (e.target === toggle.querySelector('.header-inner::after') || toggle.contains(e.target)) {
+      // Asumir que el click en el área del header toggles si no hay enlace
+      if (!e.target.closest('a')) {
         nav.classList.toggle('active');
         console.log(`Navegación móvil toggled en ${pagina}`);
       }
@@ -249,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
       interiores: "Hola, quiero cotizar diseño de interiores",
       soporte: "Hola, necesito soporte técnico",
       pintura: "Hola, quiero cotizar pintura",
-      ubicacion: "Hola, quiero más detalles sobre su ubicación en Bogotá",
+      ubicacion: "Hola, quiero más detalles sobre su ubicación en Bello",
       horario: "Hola, quiero más detalles sobre sus horarios",
       precio: "Hola, quiero una cotización detallada",
       servicios: "Hola, quiero más información sobre sus servicios",
@@ -260,7 +319,8 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       sessionStorage.removeItem('chatbot_conversation');
       sessionStorage.removeItem('chatbot_greeting_shown');
-      console.log(`Conversación y bandera de saludo limpiadas en sessionStorage para ${pagina}`);
+      sessionStorage.removeItem('chat_state');
+      console.log(`Conversación, bandera de saludo y estado limpiados en sessionStorage para ${pagina}`);
       setTimeout(() => {
         const btn = document.createElement('div');
         btn.innerHTML = `
@@ -285,4 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error(`Error al mostrar el botón de WhatsApp en ${pagina}:`, error);
     }
   }
+
+  // Iniciar timer de inactividad inicial si el chat se abre auto
+  resetInactivityTimers();
 });
