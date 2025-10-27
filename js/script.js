@@ -36,13 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // RESPUESTAS POR PÁGINA Y FAQ (sin precios)
   const respuestas = {
     inicio: {
-      saludo: "¡Hola! Bienvenido a Ycay360. Ofrecemos:\n• Diseño de interiores\n• Soporte técnico\n• Pintura profesional\n\n¿Cuál te interesa?",
+      saludo: "¡Hola! Bienvenido a Ycay360. Ofrecemos:\n• Servicios Hogar\n• Soporte técnico\n• Pintura profesional\n\n¿Cuál te interesa?",
       default: "Perfecto. Un experto te ayudará por WhatsApp en minutos.\n\n¿Listo para chatear?",
       despedida: "¡Genial! Te redirigimos a WhatsApp..."
     },
-    interiores: {
-      saludo: "¡Hola! Estás en **Diseño de Interiores**.\n\nTe ofrecemos:\n• Asesoría personalizada\n• Renders 3D realistas\n• Ejecución completa del proyecto\n\n¿Quieres que un diseñador te contacte?",
-      default: "Entendido. Un especialista en diseño te escribirá por WhatsApp.\n\n¿Te parece bien?",
+    servicios: {
+      saludo: "¡Hola! Estás en **Servicios Hogar**.\n\nTe ofrecemos:\n• Drywall\n• Plomería\n• Electricidad\n• Remodelaciones\n\n¿Quieres que un experto te contacte?",
+      default: "Entendido. Un especialista te escribirá por WhatsApp.\n\n¿Te parece bien?",
       despedida: "¡Perfecto! Abriendo WhatsApp..."
     },
     soporte: {
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ubicacion: "Estamos ubicados en Bello, Colombia. ¿Quieres que te demos más detalles por WhatsApp?",
       horario: "Nuestro horario es de lunes a viernes de 8:00 a.m. a 6:00 p.m., y sábados de 9:00 a.m. a 1:00 p.m. ¿Te ayudamos con algo más o quieres contactarnos por WhatsApp?",
       precio: "Los precios varían según el servicio y el proyecto. ¿Quieres una cotización detallada por WhatsApp?",
-      servicios: "Ofrecemos diseño de interiores, soporte técnico (redes, PC, recuperación de datos), y pintura profesional con garantía. ¿Te interesa algún servicio en particular o quieres más detalles por WhatsApp?",
+      servicios: "Ofrecemos servicios hogar (drywall, plomería, electricidad), soporte técnico (redes, PC, recuperación de datos), y pintura profesional con garantía. ¿Te interesa algún servicio en particular o quieres más detalles por WhatsApp?",
       contacto: "Puedes contactarnos por WhatsApp al +57 304 2096459 o por correo a contacto@ycay360.com. ¿Prefieres que te llamemos o seguimos por WhatsApp?"
     }
   };
@@ -91,8 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
     clearTimeout(inactivityTimer);
     clearTimeout(resetTimer);
     inactivityTimer = setTimeout(() => {
-      if (currentState !== 'despedida') {
-        mostrarMensaje('Hola, ¿sigues ahí?', 'bot');
+      if (currentState !== 'despedida' && chatbot.classList.contains('open')) {
+        mostrarMensaje('¿Sigues ahí?', 'bot');
         currentState = 'esperando_respuesta_inactividad';
         sessionStorage.setItem('chat_state', currentState);
         resetTimer = setTimeout(resetChat, 60000); // 1 min para responder, luego reset
@@ -102,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Función para resetear el chat por inactividad
   function resetChat() {
+    if (!chatbot.classList.contains('open')) return;
     conversacion = [];
     body.innerHTML = '';
     currentState = 'inicio';
@@ -240,8 +241,14 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     esperando_respuesta_inactividad: (input, page) => {
       // Si responde, continua normal
-      currentState = 'esperando_respuesta';
-      return states['esperando_respuesta'](input, page);
+      const msg = input.toLowerCase();
+      if (msg.includes('si') || msg.includes('sí') || msg.includes('aqui') || msg.includes('aquí')) {
+        currentState = 'esperando_respuesta';
+        return '¡Genial! ¿En qué más te ayudo?';
+      } else {
+        resetChat();
+        return '';
+      }
     },
     despedida: (input, page) => {
       return '¡Gracias por chatear! Si necesitas más, abre el chat de nuevo.';
@@ -264,8 +271,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Procesar con máquina de estados
       setTimeout(() => {
+        if (!chatbot.classList.contains('open')) return; // No procesar si cerrado
         let respuesta = states[currentState](userMsg, pagina);
-        mostrarMensaje(respuesta, 'bot');
+        if (respuesta) mostrarMensaje(respuesta, 'bot');
         sessionStorage.setItem('chat_state', currentState);
         resetInactivityTimers();
       }, 800);
@@ -274,10 +282,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // NAVEGACIÓN MÓVIL (corregido para pseudo-elemento, asumiendo que el toggle es el contenedor)
+  // NAVEGACIÓN MÓVIL
   if (toggle && nav) {
     toggle.addEventListener('click', (e) => {
-      // Asumir que el click en el área del header toggles si no hay enlace
       if (!e.target.closest('a')) {
         nav.classList.toggle('active');
         console.log(`Navegación móvil toggled en ${pagina}`);
@@ -288,6 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // MOSTRAR MENSAJE
   function mostrarMensaje(texto, tipo) {
     try {
+      if (!chatbot.classList.contains('open')) return; // No añadir si cerrado
       const msg = document.createElement('div');
       msg.classList.add(tipo === 'bot' ? 'bot-msg' : 'user-msg');
       msg.innerHTML = texto.replace(/\n/g, '<br>');
@@ -305,7 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function mostrarBotonWhatsApp(pagina, faqType = null) {
     const textos = {
       inicio: "Hola, vengo del chat de la página principal",
-      interiores: "Hola, quiero cotizar diseño de interiores",
+      servicios: "Hola, quiero cotizar servicios hogar",
       soporte: "Hola, necesito soporte técnico",
       pintura: "Hola, quiero cotizar pintura",
       ubicacion: "Hola, quiero más detalles sobre su ubicación en Bello",
@@ -322,6 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
       sessionStorage.removeItem('chat_state');
       console.log(`Conversación, bandera de saludo y estado limpiados en sessionStorage para ${pagina}`);
       setTimeout(() => {
+        if (!chatbot.classList.contains('open')) return;
         const btn = document.createElement('div');
         btn.innerHTML = `
           <a href="https://wa.me/573042096459?text=${encodeURIComponent(textos[faqType || pagina])}" 
@@ -335,10 +344,12 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Botón de WhatsApp mostrado en ${pagina} para ${faqType || pagina}`);
 
         setTimeout(() => {
-          chatbot.classList.remove('open');
-          chatbot.classList.add('closed');
-          openBtn.style.display = 'flex';
-          console.log(`Chatbot cerrado tras redirigir a WhatsApp en ${pagina}, botón open-chat restaurado`);
+          if (chatbot.classList.contains('open')) {
+            chatbot.classList.remove('open');
+            chatbot.classList.add('closed');
+            openBtn.style.display = 'flex';
+            console.log(`Chatbot cerrado tras redirigir a WhatsApp en ${pagina}, botón open-chat restaurado`);
+          }
         }, 2000);
       }, 1000);
     } catch (error) {
