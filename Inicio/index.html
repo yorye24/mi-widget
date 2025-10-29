@@ -3,118 +3,103 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pintura - Ycay360</title>
+  <title>Ycay360 - Soluciones Integrales</title>
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo-ycay360.png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../mi-widget-main/style.css" />
+  <link rel="stylesheet" href="../style.css" />
   <link rel="preload" href="../assets/logo-ycay360.png" as="image">
-  <link rel="preload" href="../assets/pintura-vibrante.jpg" as="image">
+  <link rel="preload" href="../assets/hero-bg.png" as="image">
 </head>
-<body data-page="pintura">
+<body data-page="inicio">
 
   <!-- HEADER -->
   <header class="site-header">
     <div class="container header-inner">
       <a href="../Inicio/" class="brand">
-        <img src="../assets/logo-ycay360.png" alt="Ycay360" class="logo" onerror="this.style.display='none'">
-        <span class="brand-text">Ycay360</span>
+        <img src="../assets/logo-ycay360.png" alt="Ycay360" class="logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+        <span class="brand-text" style="display: none;">Ycay360</span>
       </a>
       <nav class="nav">
-        <a href="../Inicio/">Inicio</a>
-        <a href="../Servicios-Hogar/">Servicios Hogar</a>
-        <a href="../Soporte-TIC/">Soporte TIC</a>
-        <a href="../Pintura/" class="active">Pintura</a>
+        <a href="../Inicio/" class="active">Inicio</a>
+        <a href="../servicios-hogar/">Servicios Hogar</a>
+        <a href="../soporte-tic/">Soporte TIC</a>
+        <a href="../pintura/">Pintura</a>
       </nav>
     </div>
   </header>
 
-  <!-- HERO CON IMAGEN DE FONDO -->
-  <section class="page-hero" style="background-image: url('../assets/portada-pintura.jpg');">
+  <!-- HERO -->
+  <section class="page-hero" style="background-image: url('../assets/hero-bg.png');">
     <div class="hero-overlay"></div>
     <div class="container hero-content">
-      <h1>Pintura Premium</h1>
-      <p class="lead">Transforma tus espacios con color, estilo y calidad profesional</p>
-      <a href="https://wa.me/573042096459?text=Hola,%20quiero%20una%20cotizaci%C3%B3n%20de%20pintura" 
+      <h1>Soluciones integrales para tu espacio y tu tecnología</h1>
+      <p class="lead">Soporte TIC • Pintura premium • Mantenimiento y optimización digital</p>
+      
+      <div class="hero-bullets">
+        <span>Profesionales</span>
+        <span>Coordinación y visitas programadas</span>
+        <span>Soporte y mantenimiento preventivo</span>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#servicios" class="btn btn-primary">Ver servicios</a>
+        <a href="https://wa.me/573042096459" target="_blank" class="btn btn-whatsapp">Contáctanos</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="services" id="servicios">
+    <div class="container">
+      <h2>Nuestros servicios</h2>
+      <div class="cards">
+        
+        <a href="../servicios-hogar/" class="card">
+          <div class="card-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+          </div>
+          <h3>Servicios Hogar</h3>
+          <p>Drywall, plomería, electricidad y remodelaciones integrales para tu hogar.</p>
+          <span class="card-link">Ver más</span>
+        </a>
+
+        <a href="../soporte-tic/" class="card">
+          <div class="card-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <h3>Soporte TIC</h3>
+          <p>Mantenimiento preventivo, redes WiFi, soporte remoto/presencial y recuperación de datos.</p>
+          <span class="card-link">Ver más</span>
+        </a>
+
+        <a href="../pintura/" class="card">
+          <div class="card-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M7 21a4 4 0 0 1-4-4V5a2 2 0 0 1 2-2h4l2 4h10a2 2 0 0 1 2 2v2"/>
+            </svg>
+          </div>
+          <h3>Pintura</h3>
+          <p>Acabados profesionales con pinturas premium, preparación de superficies y garantía de 1 año.</p>
+          <span class="card-link">Ver más</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="contact-cta">
+    <div class="container">
+      <h3>¿Listo para transformar tu espacio?</h3>
+      <p>Escríbenos por WhatsApp o usa el chat. ¡Te respondemos en minutos!</p>
+      <a href="https://wa.me/573042096459?text=Hola,%20quiero%20cotizar%20un%20servicio" 
          class="btn btn-whatsapp" target="_blank">
-        Cotizar Ahora
+        Agendar por WhatsApp
       </a>
-    </div>
-  </section>
-
-  <!-- SERVICIOS EN TARJETAS -->
-  <section class="services-grid-section">
-    <div class="container">
-      <h2 style="text-align: center; color: inherit; font-weight: 700; font-size: 2.5rem; margin-bottom: 3rem;">Nuestros servicios de pintura</h2>
-      <div class="services-grid">
-
-        <div class="service-card">
-          <img src="../assets/pintura-vibrante.jpg" alt="Pintura vibrante" loading="lazy" onerror="this.src='../assets/fallback-image.jpg'">
-          <h3>Pintura vibrante y moderna</h3>
-          <p>Colores intensos y tendencias actuales. Ideal para espacios juveniles y creativos.</p>
-        </div>
-
-        <div class="service-card">
-          <img src="../assets/pintura-minimalista.jpg" alt="Pintura minimalista" loading="lazy" onerror="this.src='../assets/fallback-image.jpg'">
-          <h3>Pintura minimalista y elegante</h3>
-          <p>Tonos neutros, acabados suaves y líneas limpias. Perfecto para oficinas y hogares modernos.</p>
-        </div>
-
-        <div class="service-card">
-          <img src="../assets/pintura-creativa.jpg" alt="Pintura creativa" loading="lazy" onerror="this.src='../assets/fallback-image.jpg'">
-          <h3>Pintura creativa y personalizada</h3>
-          <p>Diseños únicos, murales, texturas y efectos especiales. Tu estilo, hecho realidad.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- BENEFICIOS -->
-  <section class="benefits-section">
-    <div class="container">
-      <h2 style="text-align: center; color: inherit; font-weight: 700; font-size: 2.5rem; margin-bottom: 3rem;">¿Por qué elegirnos?</h2>
-      <div class="benefits-grid">
-        <div class="benefit-item">
-          <span class="icon">🎨</span>
-          <h4>Pintura de alta calidad</h4>
-          <p>Marcas premium, resistentes y lavables.</p>
-        </div>
-        <div class="benefit-item">
-          <span class="icon">👥</span>
-          <h4>Equipo certificado</h4>
-          <p>Pintores con experiencia.</p>
-        </div>
-        <div class="benefit-item">
-          <span class="icon">⏰</span>
-          <h4>Entrega puntual</h4>
-          <p>Proyectos terminados en el tiempo acordado.</p>
-        </div>
-        <div class="benefit-item">
-          <span class="icon">🛡️</span>
-          <h4>Garantía de satisfacción</h4>
-          <p>Retoques gratis si hay imperfecciones.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CITA DESTACADA -->
-  <section class="quote-section">
-    <div class="container">
-      <blockquote>
-        <p>“Un buen color no solo cambia una pared, cambia tu estado de ánimo”</p>
-        <footer>— Ycay360, pasión por el detalle</footer>
-      </blockquote>
-    </div>
-  </section>
-
-  <!-- INFO ADICIONAL -->
-  <section class="info-section">
-    <div class="container">
-      <p class="text-center">
-        <strong>Servimos casas, apartamentos, oficinas y locales comerciales.</strong><br>
-        Cobertura en <strong>Bello, Medellín y área metropolitana</strong>.
-      </p>
     </div>
   </section>
 
@@ -130,14 +115,14 @@
           <h4>Enlaces</h4>
           <ul>
             <li><a href="../Inicio/">Inicio</a></li>
-            <li><a href="../Servicios-Hogar/">Servicios Hogar</a></li>
-            <li><a href="../Soporte-TIC/">Soporte TIC</a></li>
-            <li><a href="../Pintura/">Pintura</a></li>
+            <li><a href="../servicios-hogar/">Servicios Hogar</a></li>
+            <li><a href="../soporte-tic/">Soporte TIC</a></li>
+            <li><a href="../pintura/">Pintura</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Contacto</h4>
-          <p>contacto@ycaycom.com</p>
+          <p>contacto@ycay360.com</p>
           <p>+57 304 209 6459</p>
           <p>Bello, Colombia</p>
         </div>
