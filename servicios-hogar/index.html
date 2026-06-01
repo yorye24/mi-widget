@@ -2,152 +2,819 @@
 <html lang="es">
 <head>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8PG7CGMWP4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-8PG7CGMWP4');
-</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8PG7CGMWP4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-8PG7CGMWP4');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Servicios para el hogar en Bello y Medellín: drywall, plomería, electricidad y remodelaciones integrales. Garantía de satisfacción. Cotiza gratis con Ycay360.">
   <title>Servicios para el Hogar - Ycay360</title>
-  <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo-ycay360.png">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/LogoDefinitivoSinFondo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css" />
-  <link rel="preload" href="../assets/logo-ycay360.png" as="image">
+  <link rel="preload" href="../assets/LogoBlancoSinfondo.png" as="image">
   <link rel="preload" href="../assets/Portada Servicios.png" as="image">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════
+       SERVICIOS-HOGAR · UI/UX Pro Max · 8px spacing system
+       Brand: #FF6A00 · #6C2BD9 · #FFD700 · #0D3B66
+    ═══════════════════════════════════════════════════════ */
+
+    /* ── Spacing scale ── */
+    :root {
+      --sp-2: 16px; --sp-3: 24px; --sp-4: 32px;
+      --sp-6: 48px; --sp-8: 64px; --sp-10: 80px; --sp-12: 96px;
+      --card-r: 18px;
+    }
+
+    /* ── HERO ── */
+    .page-hero { min-height: 90vh; }
+    .hero-overlay {
+      background: linear-gradient(
+        160deg,
+        rgba(13,59,102,.72) 0%,
+        rgba(0,0,0,.45) 50%,
+        rgba(255,106,0,.18) 100%
+      );
+    }
+    .hero-content h1 { letter-spacing: -.5px; }
+    .hero-bullets { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+    .hero-bullets span {
+      font-size: .875rem;
+      font-weight: 500;
+      padding: 8px 18px;
+    }
+
+    /* ── STATS ── */
+    .stats-section {
+      background: white;
+      padding: var(--sp-6) 0;
+      border-bottom: 1px solid #efefef;
+      box-shadow: 0 6px 28px rgba(0,0,0,.05);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      text-align: center;
+    }
+    .stat-item {
+      padding: 20px 16px;
+      border-right: 1px solid #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-icon {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg,rgba(255,106,0,.1),rgba(108,43,217,.1));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 4px;
+    }
+    .stat-icon svg {
+      width: 22px; height: 22px;
+      stroke: var(--brand-primary);
+      fill: none; stroke-width: 2;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+    .stat-number {
+      font-size: 2.4rem; font-weight: 800;
+      background: var(--bg-gradient);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      line-height: 1; display: block;
+    }
+    .stat-label { color: var(--muted); font-size: .85rem; font-weight: 500; }
+
+    /* ── SERVICES GRID ── */
+    .services-grid-section {
+      padding: var(--sp-12) 0;
+      background: #f3f4f6;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    /* Reset tarjeta base */
+    .service-card {
+      background: white;
+      border-radius: var(--card-r);
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,.07);
+      transition: transform .25s ease-out, box-shadow .25s ease-out;
+      display: flex; flex-direction: column;
+      position: relative;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--bg-gradient); z-index: 1;
+    }
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 24px 56px rgba(255,106,0,.16);
+    }
+
+    /* Imagen centrada con aspect-ratio */
+    .service-img-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: #e8eaed;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .service-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      transition: transform .45s ease-out;
+    }
+    .service-card:hover .service-img-wrap img { transform: scale(1.07); }
+    /* Gradiente sutil sobre la imagen */
+    .service-img-wrap::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top,rgba(0,0,0,.22) 0%,transparent 52%);
+      pointer-events: none;
+    }
+
+    /* Cuerpo tarjeta */
+    .service-card-body { padding: 20px 22px 4px; flex: 1; }
+    .service-card-body h3 {
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--brand-dark);
+      margin-bottom: 8px; padding: 0;
+    }
+    .service-card-body p {
+      font-size: .875rem; color: var(--muted);
+      line-height: 1.65; padding: 0;
+    }
+
+    /* Botón CTA de tarjeta */
+    .service-card .card-cta {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin: 16px 22px 22px;
+      padding: 13px 20px;
+      background: var(--bg-gradient);
+      color: white; border-radius: 50px;
+      font-weight: 600; font-size: .875rem;
+      text-decoration: none;
+      transition: opacity .2s ease, transform .2s ease, box-shadow .2s ease;
+      box-shadow: 0 4px 16px rgba(255,106,0,.28);
+      min-height: 44px;
+    }
+    .service-card .card-cta:hover {
+      opacity: .92; transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255,106,0,.36);
+    }
+    .card-cta svg {
+      width: 16px; height: 16px;
+      fill: white; flex-shrink: 0;
+    }
+
+    /* ── PROCESO ── */
+    .process-section {
+      padding: var(--sp-12) 0;
+      background: var(--brand-dark); color: white;
+    }
+    .process-section .section-title {
+      background: none; -webkit-text-fill-color: white; color: white;
+    }
+    .process-subtitle {
+      text-align: center; color: rgba(255,255,255,0.68);
+      font-size: 1rem; margin-top: -2rem; margin-bottom: 3rem; line-height: 1.6;
+    }
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+    .process-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius); padding: 36px 28px;
+      display: flex; flex-direction: column; align-items: flex-start;
+      gap: 16px; transition: background .3s ease, transform .3s ease, border-color .3s ease;
+      position: relative; overflow: hidden;
+    }
+    .process-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--bg-gradient);
+      transform: scaleX(0); transform-origin: left; transition: transform .4s ease;
+    }
+    .process-card:hover {
+      background: rgba(255,255,255,0.09);
+      transform: translateY(-6px); border-color: rgba(255,106,0,0.4);
+    }
+    .process-card:hover::before { transform: scaleX(1); }
+    .process-num {
+      width: 52px; height: 52px;
+      background: var(--bg-gradient); border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; font-weight: 800; color: white; flex-shrink: 0;
+      box-shadow: 0 6px 20px rgba(255,106,0,0.35);
+    }
+    .process-card h4 {
+      color: white; font-size: 1.1rem; font-weight: 700; line-height: 1.3; margin: 0;
+    }
+    .process-card p {
+      color: rgba(255,255,255,0.68); font-size: .9rem; line-height: 1.7; margin: 0;
+    }
+
+    /* ── Subtítulo de sección ── */
+    .section-subtitle {
+      text-align: center;
+      color: var(--muted);
+      font-size: 1rem;
+      margin-top: -2rem;
+      margin-bottom: 3rem;
+      line-height: 1.7;
+      max-width: 580px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── Hover icono beneficio ── */
+    .benefit-icon-wrap { transition: transform .3s ease; }
+    .benefit-item:hover .benefit-icon-wrap { transform: translateY(-4px) scale(1.05); }
+
+    /* ── Hero CTA respiro ── */
+    .page-hero .hero-cta { margin-top: 36px; }
+
+    /* ── BENEFICIOS ── */
+    .benefits-section {
+      padding: var(--sp-12) 0;
+      background: linear-gradient(135deg,rgba(255,106,0,.03),rgba(108,43,217,.04));
+    }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .benefit-item {
+      background: white;
+      border-radius: var(--card-r);
+      padding: 36px 22px 30px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,.06);
+      transition: transform .25s ease-out, box-shadow .25s ease-out;
+      position: relative; overflow: hidden;
+    }
+    .benefit-item::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 4px; background: var(--bg-gradient);
+    }
+    .benefit-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 44px rgba(255,106,0,.13);
+    }
+    /* Ocultar emoji legacy, usar SVG */
+    .benefit-icon { display: none !important; }
+    .benefit-icon-wrap {
+      width: 68px; height: 68px;
+      background: linear-gradient(135deg,rgba(255,106,0,.1),rgba(108,43,217,.08));
+      border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+    }
+    .benefit-icon-wrap svg {
+      width: 30px; height: 30px;
+      stroke: var(--brand-primary); fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .benefit-item h4 {
+      font-size: 1rem; font-weight: 700;
+      color: var(--brand-dark); margin-bottom: 10px;
+    }
+    .benefit-item p {
+      color: var(--muted); font-size: .875rem; line-height: 1.65;
+    }
+
+    /* ── QUOTE ── */
+    .quote-section { padding: var(--sp-10) 0; background: #f3f4f6; }
+    .quote-section blockquote {
+      max-width: 740px; margin: 0 auto;
+      border-left: none;
+      padding: 52px 56px 44px;
+      background: white;
+      border-radius: 28px;
+      position: relative; text-align: center;
+      box-shadow: 0 4px 24px rgba(0,0,0,.06);
+    }
+    .quote-deco {
+      font-size: 6rem; line-height: .8;
+      background: var(--bg-gradient);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      font-family: Georgia, serif;
+      opacity: .3; display: block; margin-bottom: 8px;
+    }
+    .quote-section p {
+      font-size: 1.3rem; font-weight: 600;
+      color: var(--brand-dark); line-height: 1.6;
+      margin-bottom: 20px; font-style: normal;
+    }
+    .quote-section footer {
+      font-size: .9rem; font-weight: 600; color: var(--brand-primary);
+    }
+
+    /* ── COBERTURA ── */
+    .info-section { padding: var(--sp-8) 0; background: white; }
+    .info-section .container {
+      background: linear-gradient(135deg,rgba(13,59,102,.04),rgba(108,43,217,.04));
+      border-radius: 24px;
+      padding: 44px 56px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.05);
+      text-align: center;
+    }
+    .coverage-title {
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--brand-dark); margin-bottom: 6px;
+    }
+    .coverage-sub {
+      font-size: 1rem; color: var(--muted);
+      margin-bottom: 24px !important;
+    }
+    .coverage-chips {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      justify-content: center; margin-top: 0;
+    }
+    .chip {
+      background: transparent;
+      color: var(--brand-secondary);
+      border: 1.5px solid var(--brand-secondary);
+      padding: 9px 22px; border-radius: 50px;
+      font-size: .875rem; font-weight: 600;
+      transition: all .2s ease; cursor: default;
+    }
+
+    /* ── CTA FINAL ── */
+    .contact-cta { padding: var(--sp-12) 0; }
+    .contact-cta h3 { font-size: 2.3rem; font-weight: 800; margin-bottom: 14px; }
+    .contact-cta p { font-size: 1.1rem; margin-bottom: 36px; opacity: .92; }
+    .cta-dual {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    }
+    .btn-cta-primary {
+      padding: 16px 36px; border-radius: var(--radius);
+      font-weight: 700; font-size: 1rem; text-decoration: none;
+      background: white; color: var(--brand-primary);
+      box-shadow: 0 4px 18px rgba(0,0,0,.15);
+      transition: all .25s ease-out;
+      min-height: 52px; display: inline-flex; align-items: center; gap: 10px;
+    }
+    .btn-cta-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.2);
+    }
+    .btn-cta-secondary {
+      padding: 16px 36px; border-radius: var(--radius);
+      font-weight: 600; font-size: 1rem; text-decoration: none;
+      border: 2px solid rgba(255,255,255,.7); color: white;
+      transition: all .25s ease-out;
+      min-height: 52px; display: inline-flex; align-items: center; gap: 10px;
+    }
+    .btn-cta-secondary:hover {
+      background: rgba(255,255,255,.15);
+      border-color: white; transform: translateY(-3px);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .services-grid   { grid-template-columns: repeat(2, 1fr); }
+      .benefits-grid   { grid-template-columns: repeat(2, 1fr); }
+      .process-grid    { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-item { border-bottom: 1px solid #f0f0f0; border-right: none; }
+      .stat-item:nth-child(odd) { border-right: 1px solid #f0f0f0; }
+      .stat-item:nth-last-child(-n+2) { border-bottom: none; }
+
+      .services-grid   { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+      .benefits-grid   { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
+      .process-grid    { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
+
+      .info-section .container { padding: 32px 24px; }
+      .quote-section blockquote { padding: 36px 24px 32px; }
+      .quote-deco { font-size: 4rem; }
+      .quote-section p { font-size: 1.1rem; }
+      .contact-cta h3 { font-size: 1.75rem; }
+      .cta-dual { flex-direction: column; align-items: center; }
+      .btn-cta-primary, .btn-cta-secondary {
+        width: 100%; max-width: 300px; justify-content: center;
+      }
+    }
+    @media (max-width: 480px) {
+      .services-grid-section,
+      .process-section,
+      .benefits-section { padding: 64px 0; }
+      .page-hero { min-height: 80vh; }
+    }
+
+    /* ── Footer: respiro entre líneas de contacto ── */
+    .footer-col p { margin-bottom: 6px; }
+
+    /* ── Animación scroll reveal (CSS only) ── */
+    @media (prefers-reduced-motion: no-preference) {
+      .service-card, .benefit-item, .process-step {
+        animation: none;
+      }
+    }
+  </style>
 </head>
- 
+
 <body data-page="servicios">
 
-  <!-- HEADER -->
+  <!-- ══════════════ HEADER ══════════════ -->
   <header class="site-header">
     <div class="container header-inner">
-      <a href="Inicio" class="brand">
-        <img src="../assets/logo-ycay360.png" alt="Ycay360" class="logo" onerror="this.style.display='none'">
-        <span class="brand-text">Ycay360</span>
+      <a href="../" class="brand">
+        <img src="../assets/LogoBlancoSinfondo.png" alt="Ycay360" class="logo" onerror="this.style.display='none'">
+        <!-- <span class="brand-text">Ycay360</span> -->
       </a>
-      <nav class="nav">
-        <a href="/">Inicio</a>
-        <a href="../servicios-hogar/" class="active">Servicios Hogar</a>
+      <nav class="nav" aria-label="Navegación principal">
+        <a href="../">Inicio</a>
+        <a href="../servicios-hogar/" class="active" aria-current="page">Servicios Hogar</a>
         <a href="../soporte-tic/">Soporte TIC</a>
         <a href="../pintura/">Pintura</a>
       </nav>
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
     </div>
   </header>
 
-  <!-- HERO CON IMAGEN DE FONDO -->
-  <section class="page-hero" style="background-image: url('../assets/Portada Servicios.png');">
+  <!-- ══════════════ HERO ══════════════ -->
+  <section class="page-hero" style="background-image:url('../assets/Portada Servicios.png');" aria-label="Portada servicios hogar">
     <div class="hero-overlay"></div>
     <div class="container hero-content">
+      <!-- <span class="hero-badge">Construcción · Remodelación · Mantenimiento</span> -->
       <h1>Servicios para el Hogar</h1>
-      <a href="https://wa.me/573042096459?text=Hola,%20quiero%20cotizar%20un%20servicio%20para%20mi%20hogar"
-         class="btn btn-whatsapp" target="_blank">
-        Cotizar Ahora
-      </a>
+      <p class="lead">Drywall, plomería, electricidad y remodelaciones integrales<br>con garantía de calidad en cada proyecto.</p>
+      <div class="hero-bullets">
+        <span>Presupuesto sin compromiso</span>
+        <span>Materiales certificados</span>
+        <span>Garantía en todos los trabajos</span>
+        <span>Pago al finalizar</span>
+      </div>
+      <div class="hero-cta">
+        <a href="#servicios-grid" class="btn btn-primary">Ver todos los servicios</a>
+        <a href="https://wa.me/573042096459?text=Hola,%20quiero%20cotizar%20un%20servicio%20para%20mi%20hogar"
+           class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">
+          Cotizar ahora
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- SERVICIOS EN TARJETAS -->
-  <section class="services-grid-section">
+  <!-- ══════════════ ESTADÍSTICAS ══════════════ -->
+  <section class="stats-section" aria-label="Cifras de confianza">
     <div class="container">
-      <h2 style="text-align: center; color: inherit; font-weight: 700; font-size: 2.5rem; margin-bottom: 3rem;">
-        Nuestros servicios para el hogar
-      </h2>
+      <div class="stats-grid">
+
+        <div class="stat-item">
+          <div class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+          </div>
+          <span class="stat-number">150+</span>
+          <span class="stat-label">Proyectos completados</span>
+        </div>
+
+        <div class="stat-item">
+          <div class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <span class="stat-number">6</span>
+          <span class="stat-label">Servicios especializados</span>
+        </div>
+
+        <div class="stat-item">
+          <div class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <span class="stat-number">98%</span>
+          <span class="stat-label">Clientes satisfechos</span>
+        </div>
+
+        <div class="stat-item">
+          <div class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <span class="stat-number">5★</span>
+          <span class="stat-label">Calificación promedio</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ SERVICIOS ══════════════ -->
+  <section class="services-grid-section" id="servicios-grid" aria-labelledby="servicios-titulo">
+    <div class="container">
+      <h2 class="section-title" id="servicios-titulo">Nuestros servicios para el hogar</h2>
+      <p class="section-subtitle">Desde drywall hasta remodelaciones integrales — ejecutamos cada proyecto con calidad, orden y garantía incluida.</p>
       <div class="services-grid">
-        <div class="service-card">
-          <img src="../assets/drywall.jpg" alt="Instalación de Drywall" loading="lazy" onerror="this.src='../assets/fallback-image.jpg'">
-          <h3>Instalación de Drywall</h3>
-          <p>Sistemas profesionales para divisiones, techos y estructuras residenciales.</p>
-        </div>
-        <div class="service-card">
-          <img src="../assets/estuco-resane.jpg" alt="Estuco y Resane" loading="lazy" onerror="this.src='../assets/fallback-image.jpg'">
-          <h3>Estuco y Resane</h3>
-          <p>Acabados perfectos en muros y superficies para un look impecable.</p>
-        </div>
-        <div class="service-card">
-          <img src="../assets/electricidad-residencial.jpg" alt="Electricidad Residencial" loading="lazy" onerror="this.src='../assets/fallback-image.jpg'">
-          <h3>Electricidad Residencial</h3>
-          <p>Instalación de puntos nuevos, reparaciones y mantenimiento eléctrico seguro.</p>
-        </div>
-        <div class="service-card">
-          <img src="../assets/plomeria-fontaneria.jpg" alt="Plomería y Fontanería" loading="lazy" onerror="this.src='../assets/fallback-image.jpg'">
-          <h3>Plomería y Fontanería</h3>
-          <p>Reparaciones, instalaciones y mantenimiento de sistemas hidráulicos.</p>
-        </div>
-        <div class="service-card">
-          <img src="../assets/mamposteria-obras.jpg" alt="Mampostería" loading="lazy" onerror="this.src='../assets/fallback-image.jpg'">
-          <h3>Obras Menores de Mampostería</h3>
-          <p>Construcción de pequeños muros, reparaciones y adecuaciones estructurales.</p>
-        </div>
-        <div class="service-card">
-          <img src="../assets/remodelaciones-hogar.jpg" alt="Remodelaciones Generales" loading="lazy" onerror="this.src='../assets/fallback-image.jpg'">
-          <h3>Remodelaciones y Adecuaciones</h3>
-          <p>Proyectos completos para transformar tu hogar con calidad y eficiencia.</p>
-        </div>
+
+        <!-- Drywall -->
+        <article class="service-card">
+          <div class="service-img-wrap">
+            <img src="../assets/drywall.jpg"
+                 alt="Instalación profesional de Drywall para divisiones y techos"
+                 loading="lazy"
+                 width="480" height="300"
+                 onerror="this.src='../assets/hero.jpg'">
+          </div>
+          <div class="service-card-body">
+            <h3>Instalación de Drywall</h3>
+            <p>Sistemas profesionales para divisiones, techos y estructuras residenciales. Acabados limpios y duraderos.</p>
+          </div>
+          <a href="https://wa.me/573042096459?text=Hola,%20quiero%20cotizar%20instalaci%C3%B3n%20de%20Drywall"
+             class="card-cta" target="_blank" rel="noopener noreferrer" aria-label="Cotizar Drywall por WhatsApp">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Solicitar cotización
+          </a>
+        </article>
+
+        <!-- Estuco -->
+        <article class="service-card">
+          <div class="service-img-wrap">
+            <img src="../assets/estuco-resane.jpg"
+                 alt="Estuco y resane de muros con acabado perfecto"
+                 loading="lazy"
+                 width="480" height="300"
+                 onerror="this.src='../assets/hero.jpg'">
+          </div>
+          <div class="service-card-body">
+            <h3>Estuco y Resane</h3>
+            <p>Acabados perfectos en muros y superficies. Dejamos cada pared lista para pintura o decoración.</p>
+          </div>
+          <a href="https://wa.me/573042096459?text=Hola,%20quiero%20cotizar%20estuco%20y%20resane"
+             class="card-cta" target="_blank" rel="noopener noreferrer" aria-label="Cotizar estuco por WhatsApp">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Solicitar cotización
+          </a>
+        </article>
+
+        <!-- Electricidad -->
+        <article class="service-card">
+          <div class="service-img-wrap">
+            <img src="../assets/electricidad-residencial.jpg"
+                 alt="Instalaciones eléctricas residenciales seguras y certificadas"
+                 loading="lazy"
+                 width="480" height="300"
+                 onerror="this.src='../assets/hero.jpg'">
+          </div>
+          <div class="service-card-body">
+            <h3>Electricidad Residencial</h3>
+            <p>Instalación de puntos nuevos, reparaciones y mantenimiento eléctrico. Trabajo seguro y normativo.</p>
+          </div>
+          <a href="https://wa.me/573042096459?text=Hola,%20quiero%20cotizar%20electricidad%20residencial"
+             class="card-cta" target="_blank" rel="noopener noreferrer" aria-label="Cotizar electricidad por WhatsApp">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Solicitar cotización
+          </a>
+        </article>
+
+        <!-- Plomería -->
+        <article class="service-card">
+          <div class="service-img-wrap">
+            <img src="../assets/plomeria-fontaneria.jpg"
+                 alt="Plomería y fontanería para instalaciones hidráulicas"
+                 loading="lazy"
+                 width="480" height="300"
+                 onerror="this.src='../assets/hero.jpg'">
+          </div>
+          <div class="service-card-body">
+            <h3>Plomería y Fontanería</h3>
+            <p>Reparaciones, instalaciones y mantenimiento de sistemas hidráulicos. Sin fugas, sin problemas.</p>
+          </div>
+          <a href="https://wa.me/573042096459?text=Hola,%20quiero%20cotizar%20plomer%C3%ADa%20y%20fontaner%C3%ADa"
+             class="card-cta" target="_blank" rel="noopener noreferrer" aria-label="Cotizar plomería por WhatsApp">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Solicitar cotización
+          </a>
+        </article>
+
+        <!-- Mampostería -->
+        <article class="service-card">
+          <div class="service-img-wrap">
+            <img src="../assets/mamposteria-obras.jpg"
+                 alt="Mampostería y obras menores de construcción residencial"
+                 loading="lazy"
+                 width="480" height="300"
+                 onerror="this.src='../assets/hero.jpg'">
+          </div>
+          <div class="service-card-body">
+            <h3>Obras de Mampostería</h3>
+            <p>Construcción de muros, reparaciones y adecuaciones estructurales con materiales de calidad probada.</p>
+          </div>
+          <a href="https://wa.me/573042096459?text=Hola,%20quiero%20cotizar%20obras%20de%20mampostería"
+             class="card-cta" target="_blank" rel="noopener noreferrer" aria-label="Cotizar mampostería por WhatsApp">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Solicitar cotización
+          </a>
+        </article>
+
+        <!-- Remodelaciones -->
+        <article class="service-card">
+          <div class="service-img-wrap">
+            <img src="../assets/remodelaciones-hogar.jpg"
+                 alt="Remodelaciones y adecuaciones generales del hogar"
+                 loading="lazy"
+                 width="480" height="300"
+                 onerror="this.src='../assets/hero.jpg'">
+          </div>
+          <div class="service-card-body">
+            <h3>Remodelaciones y Adecuaciones</h3>
+            <p>Proyectos completos para transformar tu hogar: de la idea al resultado, con calidad y eficiencia.</p>
+          </div>
+          <a href="https://wa.me/573042096459?text=Hola,%20quiero%20cotizar%20una%20remodelaci%C3%B3n"
+             class="card-cta" target="_blank" rel="noopener noreferrer" aria-label="Cotizar remodelación por WhatsApp">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Solicitar cotización
+          </a>
+        </article>
+
       </div>
     </div>
   </section>
 
-  <!-- BENEFICIOS -->
-  <section class="benefits-section">
+  <!-- ══════════════ CÓMO TRABAJAMOS ══════════════ -->
+  <section class="process-section" aria-labelledby="proceso-titulo">
     <div class="container">
-      <h2>¿Por qué elegirnos?</h2>
-      <div class="benefits-grid">
-        <div class="benefit-item">          
-          <h4>Profesionales Certificados</h4>
-          <p>Equipo con experiencia en remodelaciones.</p>
+      <h2 class="section-title" id="proceso-titulo">¿Cómo trabajamos?</h2>
+      <p class="process-subtitle">Un proceso transparente, sin sorpresas y con garantía de satisfacción en cada etapa del proyecto.</p>
+      <div class="process-grid">
+
+        <div class="process-card">
+          <div class="process-num" aria-label="Paso 1">1</div>
+          <div>
+            <h4>Contáctanos</h4>
+            <p>Escríbenos por WhatsApp o correo. Cuéntanos tu necesidad y recibe atención personalizada.</p>
+          </div>
         </div>
-        <div class="benefit-item">          
-          <h4>Materiales de Calidad</h4>
-          <p>Usamos productos premium para resultados duraderos.</p>
+
+        <div class="process-card">
+          <div class="process-num" aria-label="Paso 2">2</div>
+          <div>
+            <h4>Visita y Diagnóstico</h4>
+            <p>Un experto visita tu hogar, evalúa el trabajo y te entrega un presupuesto detallado sin costo.</p>
+          </div>
         </div>
-        <div class="benefit-item">          
-          <h4>Entrega Puntual</h4>
-          <p>Proyectos terminados en el tiempo acordado.</p>
+
+        <div class="process-card">
+          <div class="process-num" aria-label="Paso 3">3</div>
+          <div>
+            <h4>Ejecución</h4>
+            <p>Ejecutamos el proyecto en el plazo acordado, con materiales de calidad y orden en el sitio.</p>
+          </div>
         </div>
-        <div class="benefit-item">          
-          <h4>Garantía de Satisfacción</h4>
-          <p>Retoques gratis si es necesario.</p>
+
+        <div class="process-card">
+          <div class="process-num" aria-label="Paso 4">4</div>
+          <div>
+            <h4>Entrega con Garantía</h4>
+            <p>Revisamos juntos el resultado. Si algo no te convence, lo ajustamos sin costo adicional.</p>
+          </div>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- CITA DESTACADA -->
-  <section class="quote-section">
+  <!-- ══════════════ BENEFICIOS ══════════════ -->
+  <section class="benefits-section" aria-labelledby="beneficios-titulo">
+    <div class="container">
+      <h2 class="section-title" id="beneficios-titulo">¿Por qué elegirnos?</h2>
+      <p class="section-subtitle">Experiencia comprobada, materiales de calidad y compromiso real con tu satisfacción en cada obra.</p>
+      <div class="benefits-grid">
+
+        <div class="benefit-item">
+          <div class="benefit-icon-wrap" aria-hidden="true">
+            <!-- Shield check — profesionales certificados -->
+            <svg viewBox="0 0 24 24">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+          </div>
+          <h4>Profesionales Certificados</h4>
+          <p>Equipo con experiencia comprobada y conocimiento técnico en remodelación y construcción residencial.</p>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon-wrap" aria-hidden="true">
+            <!-- Package / quality materials -->
+            <svg viewBox="0 0 24 24">
+              <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+              <line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+          </div>
+          <h4>Materiales de Calidad</h4>
+          <p>Usamos productos premium con certificación para garantizar resultados estéticamente superiores y duraderos.</p>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon-wrap" aria-hidden="true">
+            <!-- Calendar — entrega puntual -->
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+              <path d="M9 16l2 2 4-4"/>
+            </svg>
+          </div>
+          <h4>Entrega Puntual</h4>
+          <p>Cumplimos los plazos acordados. Tu tiempo es valioso y lo respetamos en cada etapa del proyecto.</p>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon-wrap" aria-hidden="true">
+            <!-- Thumbs up — satisfacción garantizada -->
+            <svg viewBox="0 0 24 24">
+              <path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z"/>
+              <path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/>
+            </svg>
+          </div>
+          <h4>Garantía de Satisfacción</h4>
+          <p>Retoques sin costo si el resultado no cumple tus expectativas. Tu satisfacción es nuestra prioridad absoluta.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ CITA ══════════════ -->
+  <section class="quote-section" aria-label="Nuestra filosofía">
     <div class="container">
       <blockquote>
-        <p>“Transformamos tu hogar con calidad, eficiencia y pasión por el detalle”</p>
-        <footer>— Ycay360, expertos en soluciones integrales</footer>
+        <span class="quote-deco" aria-hidden="true">"</span>
+        <p>Transformamos tu hogar con calidad, eficiencia y pasión por el detalle</p>
+        <footer>— Ycay360, expertos en soluciones integrales para el hogar</footer>
       </blockquote>
     </div>
   </section>
 
-  <!-- INFO ADICIONAL -->
-  <section class="info-section">
+  <!-- ══════════════ COBERTURA ══════════════ -->
+  <section class="info-section" aria-labelledby="cobertura-titulo">
     <div class="container">
-      <p class="text-center">
-        <strong>Servimos casas, apartamentos y locales residenciales.</strong><br>
-        Cobertura en <strong>Bello, Medellín y área metropolitana</strong>.
-      </p>
+      <p class="coverage-title" id="cobertura-titulo">Área de cobertura</p>
+      <p class="coverage-sub">Atendemos casas, apartamentos y locales en el área metropolitana.</p>
+      <div class="coverage-chips" role="list" aria-label="Ciudades atendidas">
+        <span class="chip" role="listitem" style="font-weight: bold;">Valle de Aburrá</span>
+        <!-- <span class="chip" role="listitem">Bello</span>
+        <span class="chip" role="listitem">Medellín</span>
+        <span class="chip" role="listitem">Copacabana</span>
+        <span class="chip" role="listitem">Itagüí</span>
+        <span class="chip" role="listitem">Envigado</span>
+        <span class="chip" role="listitem">Sabaneta</span> -->
+      </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
+
+  <!-- ══════════════ CTA FINAL ══════════════ -->
+  <section class="contact-cta" aria-labelledby="cta-titulo">
+    <div class="container">
+      <h3 id="cta-titulo">¿Listo para transformar tu hogar?</h3>
+      <p>Escríbenos ahora y recibe tu cotización personalizada, sin compromiso.</p>
+      <div class="cta-dual">
+        <a href="https://wa.me/573042096459?text=Hola,%20quiero%20cotizar%20un%20servicio%20para%20mi%20hogar"
+           class="btn-cta-primary" target="_blank" rel="noopener noreferrer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Cotizar por WhatsApp
+        </a>
+        <a href="mailto:contacto@ycaycom.com?subject=Cotización%20servicios%20hogar"
+           class="btn-cta-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Enviar correo
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ FOOTER ══════════════ -->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col">
-          <img src="../assets/logo-ycay360.png" alt="Ycay360" class="footer-logo" loading="lazy" onerror="this.src='../assets/fallback-image.jpg'">
+          <img src="../assets/LogoDefinitivoSinFondo.png" alt="Ycay360" class="footer-logo" loading="lazy" onerror="this.style.display='none'">
           <p>Transformamos espacios y optimizamos tu infraestructura digital.</p>
         </div>
         <div class="footer-col">
           <h4>Enlaces</h4>
           <ul>
-            <li><a href="../Inicio/">Inicio</a></li>
+            <li><a href="../">Inicio</a></li>
             <li><a href="../servicios-hogar/">Servicios Hogar</a></li>
             <li><a href="../soporte-tic/">Soporte TIC</a></li>
             <li><a href="../pintura/">Pintura</a></li>
@@ -166,8 +833,8 @@
     </div>
   </footer>
 
-  <!-- CHATBOT -->
-  <div id="chatbot" class="chatbot closed" role="dialog" aria-labelledby="chat-header">
+  <!-- ══════════════ CHATBOT ══════════════ -->
+  <div id="chatbot" class="chatbot closed" role="dialog" aria-labelledby="chat-header" aria-modal="true">
     <div class="chat-header" id="chat-header">
       <div class="flex items-center space-x-2">
         <div class="w-8 h-8 bg-green-500 rounded-full" aria-hidden="true"></div>
@@ -177,17 +844,17 @@
     </div>
     <div id="chat-body" class="chat-body" role="log" aria-live="polite"></div>
     <form id="chat-form" class="chat-form">
-      <input id="chat-input" type="text" placeholder="Escribe tu consulta..." autocomplete="off" />
+      <input id="chat-input" type="text" placeholder="Escribe tu consulta..." autocomplete="off" aria-label="Mensaje al asistente" />
       <button type="submit" aria-label="Enviar mensaje">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path>
         </svg>
       </button>
     </form>
   </div>
 
-  <button id="open-chat" class="open-chat" aria-label="Abrir chatbot">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24" height="24">
+  <button id="open-chat" class="open-chat" aria-label="Abrir asistente de WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24" height="24" aria-hidden="true">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
     </svg>
   </button>
@@ -195,14 +862,3 @@
   <script src="../js/script.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
