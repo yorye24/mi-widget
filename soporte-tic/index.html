@@ -2,127 +2,843 @@
 <html lang="es">
 <head>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8PG7CGMWP4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-8PG7CGMWP4');
-</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8PG7CGMWP4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-8PG7CGMWP4');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Soporte TIC profesional en Bello y Medellín: mantenimiento de PC, redes WiFi, soporte remoto y recuperación de datos. Diagnóstico gratuito. Ycay360.">
   <title>Soporte TIC - Ycay360</title>
-  <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo-ycay360.png">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/LogoDefinitivoSinFondo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css" />
-  <link rel="preload" href="../assets/logo-ycay360.png" as="image">
-  <link rel="preload" href="../assets/logo-inicio-tic.jpg" as="image">
+  <link rel="preload" href="../assets/LogoBlancoSinfondo.png" as="image">
+  <link rel="preload" href="../assets/soporte-remoto.jpg" as="image">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════
+       SOPORTE-TIC · UI/UX Pro Max · 8px spacing system
+       Brand: #FF6A00 · #6C2BD9 · #FFD700 · #0D3B66
+       Tono: Confianza · Tecnología · Rapidez · Profesionalismo
+    ═══════════════════════════════════════════════════════ */
+
+    :root {
+      --sp-2: 16px; --sp-3: 24px; --sp-4: 32px;
+      --sp-6: 48px; --sp-8: 64px; --sp-10: 80px; --sp-12: 96px;
+      --card-r: 18px;
+    }
+
+    /* ── HERO — overlay más oscuro/tech para transmitir confianza ── */
+    .page-hero { min-height: 90vh; }
+    .hero-overlay {
+      background: linear-gradient(
+        150deg,
+        rgba(13,59,102,.82) 0%,
+        rgba(108,43,217,.45) 55%,
+        rgba(255,106,0,.2) 100%
+      );
+    }
+    .hero-content h1 { letter-spacing: -.5px; }
+    .hero-bullets {
+      flex-direction: row; flex-wrap: wrap; justify-content: center;
+    }
+    .hero-bullets span { font-size: .875rem; font-weight: 500; padding: 8px 18px; }
+
+    /* ── STATS ── */
+    .stats-section {
+      background: white;
+      padding: var(--sp-6) 0;
+      border-bottom: 1px solid #efefef;
+      box-shadow: 0 6px 28px rgba(0,0,0,.05);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      text-align: center;
+    }
+    .stat-item {
+      padding: 20px 16px;
+      border-right: 1px solid #f0f0f0;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-icon {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg,rgba(255,106,0,.1),rgba(108,43,217,.1));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 4px;
+    }
+    .stat-icon svg {
+      width: 22px; height: 22px;
+      stroke: var(--brand-primary);
+      fill: none; stroke-width: 2;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+    .stat-number {
+      font-size: 2.4rem; font-weight: 800;
+      background: var(--bg-gradient);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      line-height: 1; display: block;
+    }
+    .stat-label { color: var(--muted); font-size: .85rem; font-weight: 500; }
+
+    /* ── SERVICIOS ── */
+    .services-grid-section {
+      padding: var(--sp-12) 0;
+      background: #f3f4f6;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .service-card {
+      background: white;
+      border-radius: var(--card-r);
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,.07);
+      transition: transform .25s ease-out, box-shadow .25s ease-out;
+      display: flex; flex-direction: column;
+      position: relative;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--bg-gradient); z-index: 1;
+    }
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 24px 56px rgba(255,106,0,.16);
+    }
+
+    /* Imagen centrada con aspect-ratio */
+    .service-img-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: #e8eaed;
+      position: relative; flex-shrink: 0;
+    }
+    .service-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center center;
+      display: block;
+      transition: transform .45s ease-out;
+    }
+    .service-card:hover .service-img-wrap img { transform: scale(1.07); }
+    .service-img-wrap::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top,rgba(13,59,102,.28) 0%,transparent 52%);
+      pointer-events: none;
+    }
+
+    /* Body tarjeta */
+    .service-card-body { padding: 20px 22px 4px; flex: 1; }
+    .service-card-body h3 {
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--brand-dark); margin-bottom: 8px; padding: 0;
+    }
+    .service-card-body p {
+      font-size: .875rem; color: var(--muted); line-height: 1.65; padding: 0;
+    }
+
+    /* CTA tarjeta */
+    .service-card .card-cta {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin: 16px 22px 22px;
+      padding: 13px 20px;
+      background: var(--bg-gradient);
+      color: white; border-radius: 50px;
+      font-weight: 600; font-size: .875rem;
+      text-decoration: none;
+      transition: opacity .2s ease, transform .2s ease, box-shadow .2s ease;
+      box-shadow: 0 4px 16px rgba(255,106,0,.28);
+      min-height: 44px;
+    }
+    .service-card .card-cta:hover {
+      opacity: .92; transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255,106,0,.36);
+    }
+    .card-cta svg { width: 16px; height: 16px; fill: white; flex-shrink: 0; }
+
+    /* ── PROCESO ── */
+    .process-section {
+      padding: var(--sp-12) 0;
+      background: var(--brand-dark); color: white;
+    }
+    .process-section .section-title {
+      background: none; -webkit-text-fill-color: white; color: white;
+    }
+    .process-subtitle {
+      text-align: center; color: rgba(255,255,255,0.68);
+      font-size: 1rem; margin-top: -2rem; margin-bottom: 3rem; line-height: 1.6;
+    }
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+    .process-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius); padding: 36px 28px;
+      display: flex; flex-direction: column; align-items: flex-start;
+      gap: 16px; transition: background .3s ease, transform .3s ease, border-color .3s ease;
+      position: relative; overflow: hidden;
+    }
+    .process-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--bg-gradient);
+      transform: scaleX(0); transform-origin: left; transition: transform .4s ease;
+    }
+    .process-card:hover {
+      background: rgba(255,255,255,0.09);
+      transform: translateY(-6px); border-color: rgba(255,106,0,0.4);
+    }
+    .process-card:hover::before { transform: scaleX(1); }
+    .process-num {
+      width: 52px; height: 52px;
+      background: var(--bg-gradient); border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; font-weight: 800; color: white; flex-shrink: 0;
+      box-shadow: 0 6px 20px rgba(255,106,0,0.35);
+    }
+    .process-card h4 {
+      color: white; font-size: 1.1rem; font-weight: 700; line-height: 1.3; margin: 0;
+    }
+    .process-card p {
+      color: rgba(255,255,255,0.68); font-size: .9rem; line-height: 1.7; margin: 0;
+    }
+
+    /* ── Subtítulo de sección ── */
+    .section-subtitle {
+      text-align: center;
+      color: var(--muted);
+      font-size: 1rem;
+      margin-top: -2rem;
+      margin-bottom: 3rem;
+      line-height: 1.7;
+      max-width: 580px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── Hover icono beneficio ── */
+    .benefit-icon-wrap { transition: transform .3s ease; }
+    .benefit-item:hover .benefit-icon-wrap { transform: translateY(-4px) scale(1.05); }
+
+    /* ── Hero CTA respiro ── */
+    .page-hero .hero-cta { margin-top: 36px; }
+
+    /* ── BENEFICIOS ── */
+    .benefits-section {
+      padding: var(--sp-12) 0;
+      background: linear-gradient(135deg,rgba(13,59,102,.04),rgba(108,43,217,.04));
+    }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .benefit-item {
+      background: white; border-radius: var(--card-r);
+      padding: 36px 22px 30px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,.06);
+      transition: transform .25s ease-out, box-shadow .25s ease-out;
+      position: relative; overflow: hidden;
+    }
+    .benefit-item::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 4px; background: var(--bg-gradient);
+    }
+    .benefit-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 44px rgba(108,43,217,.13);
+    }
+    .benefit-icon { display: none !important; }
+    .benefit-icon-wrap {
+      width: 68px; height: 68px;
+      background: linear-gradient(135deg,rgba(13,59,102,.08),rgba(108,43,217,.1));
+      border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+    }
+    .benefit-icon-wrap svg {
+      width: 30px; height: 30px;
+      stroke: var(--brand-secondary); fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .benefit-item h4 { font-size: 1rem; font-weight: 700; color: var(--brand-dark); margin-bottom: 10px; }
+    .benefit-item p { color: var(--muted); font-size: .875rem; line-height: 1.65; }
+
+    /* ── MODO DE ATENCIÓN (sección nueva) ── */
+    .attention-section {
+      padding: var(--sp-10) 0;
+      background: white;
+    }
+    .attention-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .attention-card {
+      border-radius: var(--card-r);
+      padding: 36px 32px;
+      position: relative; overflow: hidden;
+      display: flex; gap: 20px; align-items: flex-start;
+    }
+    .attention-card.remote {
+      background: linear-gradient(135deg,rgba(108,43,217,.06),rgba(108,43,217,.02));
+      border: 1.5px solid rgba(108,43,217,.15);
+    }
+    .attention-card.onsite {
+      background: linear-gradient(135deg,rgba(255,106,0,.06),rgba(255,106,0,.02));
+      border: 1.5px solid rgba(255,106,0,.15);
+    }
+    .attention-icon {
+      width: 56px; height: 56px; flex-shrink: 0;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .attention-card.remote .attention-icon { background: rgba(108,43,217,.12); }
+    .attention-card.onsite .attention-icon { background: rgba(255,106,0,.12); }
+    .attention-icon svg {
+      width: 28px; height: 28px; fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .attention-card.remote .attention-icon svg { stroke: var(--brand-secondary); }
+    .attention-card.onsite .attention-icon svg { stroke: var(--brand-primary); }
+    .attention-body h4 { font-size: 1.1rem; font-weight: 700; color: var(--brand-dark); margin-bottom: 8px; }
+    .attention-body p { font-size: .9rem; color: var(--muted); line-height: 1.65; margin-bottom: 0; }
+    .attention-tag {
+      display: inline-block; margin-top: 12px;
+      padding: 4px 14px; border-radius: 50px;
+      font-size: .78rem; font-weight: 700;
+      letter-spacing: .5px; text-transform: uppercase;
+    }
+    .attention-card.remote .attention-tag {
+      background: rgba(108,43,217,.1); color: var(--brand-secondary);
+    }
+    .attention-card.onsite .attention-tag {
+      background: rgba(255,106,0,.1); color: var(--brand-primary);
+    }
+
+    /* ── QUOTE ── */
+    .quote-section { padding: var(--sp-10) 0; background: #f3f4f6; }
+    .quote-section blockquote {
+      max-width: 740px; margin: 0 auto;
+      border-left: none;
+      padding: 52px 56px 44px;
+      background: white;
+      border-radius: 28px;
+      position: relative; text-align: center;
+      box-shadow: 0 4px 24px rgba(0,0,0,.06);
+    }
+    .quote-deco {
+      font-size: 6rem; line-height: .8;
+      background: var(--bg-gradient);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      font-family: Georgia, serif;
+      opacity: .3; display: block; margin-bottom: 8px;
+    }
+    .quote-section p { font-size: 1.3rem; font-weight: 600; color: var(--brand-dark); line-height: 1.6; margin-bottom: 20px; font-style: normal; }
+    .quote-section footer { font-size: .9rem; font-weight: 600; color: var(--brand-secondary); }
+
+    /* ── COBERTURA ── */
+    .info-section { padding: var(--sp-8) 0; background: white; }
+    .info-section .container {
+      background: linear-gradient(135deg,rgba(13,59,102,.04),rgba(108,43,217,.04));
+      border-radius: 24px; padding: 44px 56px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.05); text-align: center;
+    }
+    .coverage-title { font-size: 1.5rem; font-weight: 700; color: var(--brand-dark); margin-bottom: 6px; }
+    .coverage-sub { font-size: 1rem; color: var(--muted); margin-bottom: 24px !important; }
+    .coverage-chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .chip {
+      background: transparent; color: var(--brand-secondary);
+      border: 1.5px solid var(--brand-secondary);
+      padding: 9px 22px; border-radius: 50px;
+      font-size: .875rem; font-weight: 600;
+      transition: all .2s ease; cursor: default;
+    }
+
+    /* ── CTA FINAL ── */
+    .contact-cta { padding: var(--sp-12) 0; }
+    .contact-cta h3 { font-size: 2.3rem; font-weight: 800; margin-bottom: 14px; }
+    .contact-cta p { font-size: 1.1rem; margin-bottom: 36px; opacity: .92; }
+    .cta-dual { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-cta-primary {
+      padding: 16px 36px; border-radius: var(--radius);
+      font-weight: 700; font-size: 1rem; text-decoration: none;
+      background: white; color: var(--brand-primary);
+      box-shadow: 0 4px 18px rgba(0,0,0,.15);
+      transition: all .25s ease-out;
+      min-height: 52px; display: inline-flex; align-items: center; gap: 10px;
+    }
+    .btn-cta-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,.2); }
+    .btn-cta-secondary {
+      padding: 16px 36px; border-radius: var(--radius);
+      font-weight: 600; font-size: 1rem; text-decoration: none;
+      border: 2px solid rgba(255,255,255,.75); color: white;
+      transition: all .25s ease-out;
+      min-height: 52px; display: inline-flex; align-items: center; gap: 10px;
+    }
+    .btn-cta-secondary:hover { background: rgba(255,255,255,.15); border-color: white; transform: translateY(-3px); }
+
+    /* ── Footer: respiro entre líneas de contacto ── */
+    .footer-col p { margin-bottom: 6px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .services-grid   { grid-template-columns: repeat(2, 1fr); }
+      .benefits-grid   { grid-template-columns: repeat(2, 1fr); }
+      .process-grid    { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-item { border-bottom: 1px solid #f0f0f0; border-right: none; }
+      .stat-item:nth-child(odd) { border-right: 1px solid #f0f0f0; }
+      .stat-item:nth-last-child(-n+2) { border-bottom: none; }
+
+      .services-grid  { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+      .benefits-grid  { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
+      .process-grid   { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
+      .attention-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+
+      .info-section .container { padding: 32px 24px; }
+      .quote-section blockquote { padding: 36px 24px 32px; }
+      .quote-deco { font-size: 4rem; }
+      .quote-section p { font-size: 1.1rem; }
+      .contact-cta h3 { font-size: 1.75rem; }
+      .cta-dual { flex-direction: column; align-items: center; }
+      .btn-cta-primary, .btn-cta-secondary { width: 100%; max-width: 300px; justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .services-grid-section, .process-section, .benefits-section, .attention-section { padding: 64px 0; }
+      .page-hero { min-height: 80vh; }
+    }
+  </style>
 </head>
+
 <body data-page="soporte">
 
-  <!-- HEADER -->
+  <!-- ══════════════ HEADER ══════════════ -->
   <header class="site-header">
     <div class="container header-inner">
-      <a href="../Inicio/" class="brand">
-        <img src="../assets/logo-ycay360.png" alt="Ycay360" class="logo" onerror="this.style.display='none'">
-        <span class="brand-text">Ycay360</span>
+      <a href="../" class="brand">
+        <img src="../assets/LogoBlancoSinfondo.png" alt="Ycay360" class="logo" onerror="this.style.display='none'">
+        <!-- <span class="brand-text">Ycay360</span> -->
       </a>
-      <nav class="nav">
-        <a href="/">Inicio</a>
+      <nav class="nav" aria-label="Navegación principal">
+        <a href="../">Inicio</a>
         <a href="../servicios-hogar/">Servicios Hogar</a>
-        <a href="../soporte-tic/" class="active">Soporte TIC</a>
+        <a href="../soporte-tic/" class="active" aria-current="page">Soporte TIC</a>
         <a href="../pintura/">Pintura</a>
       </nav>
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">&#9776;</button>
     </div>
   </header>
 
-  <!-- HERO CON IMAGEN DE FONDO -->
-  <section class="page-hero" style="background-image: url('../assets/soporte-remoto.jpg');">
+  <!-- ══════════════ HERO ══════════════ -->
+  <section class="page-hero" style="background-image:url('../assets/soporte-remoto.jpg');" aria-label="Portada Soporte TIC">
     <div class="hero-overlay"></div>
     <div class="container hero-content">
-      <h1>Soporte TIC</h1>
-      <p class="lead">Tu tecnología funcionando al 100%, siempre</p>
-      <a href="https://wa.me/573042096459?text=Hola,%20necesito%20soporte%20TIC"
-         class="btn btn-whatsapp" target="_blank">
-        Solicitar Soporte Ahora
-      </a>
-    </div>
-  </section>
-
-  <!-- SERVICIOS EN TARJETAS -->
-  <section class="services-grid-section">
-    <div class="container">
-      <h2 style="text-align: center; color: inherit; font-weight: 700; font-size: 2.5rem; margin-bottom: 3rem;">
-        Servicios tecnológicos completos
-      </h2>
-      <div class="services-grid">
-        <div class="service-card">
-          <img src="../assets/mantenimiento-pc.jpg" alt="Mantenimiento PC" loading="lazy" onerror="this.src='../assets/fallback-image.jpg'">
-          <h3>Mantenimiento preventivo y correctivo</h3>
-          <p>Limpieza física, actualización de drivers, diagnóstico de fallos.</p>
-        </div>
-        <div class="service-card">
-          <img src="../assets/redes-tic.jpg" alt="Redes WiFi" loading="lazy" onerror="this.src='../assets/fallback-image.jpg'">
-          <h3>Instalación y configuración de redes WiFi</h3>
-          <p>Redes seguras, rápidas y con cobertura total para tu hogar u oficina.</p>
-        </div>
-        <div class="service-card">
-          <img src="../assets/soporte-remoto1.jpg" alt="Soporte remoto" loading="lazy" onerror="this.src='../assets/fallback-image.jpg'">
-          <h3>Soporte remoto (AnyDesk, TeamViewer)</h3>
-          <p>Solución inmediata desde cualquier lugar. ¡En minutos!</p>
-        </div>
-        <div class="service-card">
-          <img src="../assets/formateo-pc.jpg" alt="Recuperación de datos" loading="lazy" onerror="this.src='../assets/fallback-image.jpg'">
-          <h3>Formateo, respaldo y recuperación de datos</h3>
-          <p>Recuperamos archivos eliminados, backups automáticos y seguros.</p>
-        </div>
-        <div class="service-card">
-          <img src="../assets/soporte-virus.jpg" alt="Eliminación de virus" loading="lazy" onerror="this.src='../assets/fallback-image.jpg'">
-          <h3>Eliminación de virus y optimización de PC</h3>
-          <p>Escaneo profundo, eliminación de malware, PC como nuevo.</p>
-        </div>
-        <div class="service-card">
-          <img src="../assets/asesoria-tic.jpg" alt="Asesoría en compra" loading="lazy" onerror="this.src='../assets/fallback-image.jpg'">
-          <h3>Asesoría en compra de equipos y software</h3>
-          <p>Te guiamos para elegir lo mejor según tu necesidad y presupuesto.</p>
-        </div>
+      <!-- <span class="hero-badge">Soporte Tecnológico · Remoto y Presencial</span> -->
+      <h1>Soporte TIC para tu Hogar y Empresa</h1>
+      <p class="lead">Soluciones rápidas, seguras y profesionales<br>para todos tus equipos y redes.</p>
+      <div class="hero-bullets">
+        <span>Respuesta en minutos</span>
+        <span>Diagnóstico gratuito</span>
+        <span>Remoto o presencial</span>
+        <span>Datos 100% seguros</span>
+      </div>
+      <div class="hero-cta">
+        <a href="#servicios-tic" class="btn btn-primary">Ver servicios TIC</a>
+        <a href="https://wa.me/573042096459?text=Hola,%20necesito%20soporte%20TIC"
+           class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">
+          Solicitar soporte ahora
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- CITA DESTACADA -->
-  <section class="quote-section">
+  <!-- ══════════════ ESTADÍSTICAS ══════════════ -->
+  <section class="stats-section" aria-label="Cifras de confianza">
+    <div class="container">
+      <div class="stats-grid">
+
+        <div class="stat-item">
+          <div class="stat-icon" aria-hidden="true">
+            <!-- Zap / rapidez -->
+            <svg viewBox="0 0 24 24"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <span class="stat-number">&lt;30'</span>
+          <span class="stat-label">Tiempo de respuesta remota</span>
+        </div>
+
+        <div class="stat-item">
+          <div class="stat-icon" aria-hidden="true">
+            <!-- Monitor / equipos -->
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <span class="stat-number">200+</span>
+          <span class="stat-label">Equipos atendidos</span>
+        </div>
+
+        <div class="stat-item">
+          <div class="stat-icon" aria-hidden="true">
+            <!-- Shield / seguridad -->
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <span class="stat-number">100%</span>
+          <span class="stat-label">Confidencialidad garantizada</span>
+        </div>
+
+        <div class="stat-item">
+          <div class="stat-icon" aria-hidden="true">
+            <!-- Star / calificación -->
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <span class="stat-number">5★</span>
+          <span class="stat-label">Calificación promedio</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ SERVICIOS TIC ══════════════ -->
+  <section class="services-grid-section" id="servicios-tic" aria-labelledby="servicios-titulo">
+    <div class="container">
+      <h2 class="section-title" id="servicios-titulo">Servicios tecnológicos completos</h2>
+      <p class="section-subtitle">Soluciones rápidas y seguras para mantener tus equipos y redes siempre funcionando al máximo.</p>
+      <div class="services-grid">
+
+        <!-- Mantenimiento PC -->
+        <article class="service-card">
+          <div class="service-img-wrap">
+            <img src="../assets/mantenimiento-pc.jpg"
+                 alt="Mantenimiento preventivo y correctivo de computadores"
+                 loading="lazy" width="480" height="300"
+                 onerror="this.src='../assets/logo-inicio-tic.jpg'">
+          </div>
+          <div class="service-card-body">
+            <h3>Mantenimiento de Equipos</h3>
+            <p>Limpieza física interna, actualización de drivers, diagnóstico de fallos y optimización de rendimiento.</p>
+          </div>
+          <a href="https://wa.me/573042096459?text=Hola,%20necesito%20mantenimiento%20de%20mi%20PC"
+             class="card-cta" target="_blank" rel="noopener noreferrer" aria-label="Solicitar mantenimiento por WhatsApp">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Solicitar servicio
+          </a>
+        </article>
+
+        <!-- Redes WiFi -->
+        <article class="service-card">
+          <div class="service-img-wrap">
+            <img src="../assets/redes-tic.jpg"
+                 alt="Instalación y configuración de redes WiFi seguras"
+                 loading="lazy" width="480" height="300"
+                 onerror="this.src='../assets/logo-inicio-tic.jpg'">
+          </div>
+          <div class="service-card-body">
+            <h3>Redes y Conectividad</h3>
+            <p>Instalación y configuración de redes WiFi seguras, rápidas y con cobertura total para hogar u oficina.</p>
+          </div>
+          <a href="https://wa.me/573042096459?text=Hola,%20necesito%20instalar%20una%20red%20WiFi"
+             class="card-cta" target="_blank" rel="noopener noreferrer" aria-label="Solicitar instalación de red por WhatsApp">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Solicitar servicio
+          </a>
+        </article>
+
+        <!-- Soporte remoto -->
+        <article class="service-card">
+          <div class="service-img-wrap">
+            <img src="../assets/soporte-remoto1.jpg"
+                 alt="Soporte técnico remoto con AnyDesk y TeamViewer"
+                 loading="lazy" width="480" height="300"
+                 onerror="this.src='../assets/logo-inicio-tic.jpg'">
+          </div>
+          <div class="service-card-body">
+            <h3>Soporte Técnico Remoto</h3>
+            <p>Solución inmediata desde cualquier lugar vía AnyDesk o TeamViewer. Conexión segura, resultado rápido.</p>
+          </div>
+          <a href="https://wa.me/573042096459?text=Hola,%20necesito%20soporte%20remoto%20para%20mi%20PC"
+             class="card-cta" target="_blank" rel="noopener noreferrer" aria-label="Solicitar soporte remoto por WhatsApp">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Solicitar servicio
+          </a>
+        </article>
+
+        <!-- Formateo y recuperación -->
+        <article class="service-card">
+          <div class="service-img-wrap">
+            <img src="../assets/formateo-pc.jpg"
+                 alt="Formateo, respaldo y recuperación de datos en PC"
+                 loading="lazy" width="480" height="300"
+                 onerror="this.src='../assets/logo-inicio-tic.jpg'">
+          </div>
+          <div class="service-card-body">
+            <h3>Formateo y Recuperación de Datos</h3>
+            <p>Reinstalación del sistema, recuperación de archivos eliminados, backups automáticos y seguros.</p>
+          </div>
+          <a href="https://wa.me/573042096459?text=Hola,%20necesito%20formateo%20o%20recuperaci%C3%B3n%20de%20datos"
+             class="card-cta" target="_blank" rel="noopener noreferrer" aria-label="Solicitar formateo por WhatsApp">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Solicitar servicio
+          </a>
+        </article>
+
+        <!-- Virus y optimización -->
+        <article class="service-card">
+          <div class="service-img-wrap">
+            <img src="../assets/soporte-virus.jpg"
+                 alt="Eliminación de virus y malware, optimización de PC"
+                 loading="lazy" width="480" height="300"
+                 onerror="this.src='../assets/logo-inicio-tic.jpg'">
+          </div>
+          <div class="service-card-body">
+            <h3>Eliminación de Virus y Optimización</h3>
+            <p>Escaneo profundo, remoción de malware y spyware, y optimización completa para un PC como nuevo.</p>
+          </div>
+          <a href="https://wa.me/573042096459?text=Hola,%20necesito%20eliminar%20virus%20de%20mi%20PC"
+             class="card-cta" target="_blank" rel="noopener noreferrer" aria-label="Solicitar eliminación de virus por WhatsApp">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Solicitar servicio
+          </a>
+        </article>
+
+        <!-- Asesoría -->
+        <article class="service-card">
+          <div class="service-img-wrap">
+            <img src="../assets/asesoria-tic.jpg"
+                 alt="Asesoría personalizada en compra de equipos y software"
+                 loading="lazy" width="480" height="300"
+                 onerror="this.src='../assets/logo-inicio-tic.jpg'">
+          </div>
+          <div class="service-card-body">
+            <h3>Asesoría en Equipos y Software</h3>
+            <p>Te guiamos para elegir el equipo o software ideal según tu necesidad y presupuesto. Sin tecnicismos.</p>
+          </div>
+          <a href="https://wa.me/573042096459?text=Hola,%20quiero%20asesor%C3%ADa%20para%20comprar%20un%20equipo"
+             class="card-cta" target="_blank" rel="noopener noreferrer" aria-label="Solicitar asesoría por WhatsApp">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Solicitar servicio
+          </a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ PROCESO DE ATENCIÓN ══════════════ -->
+  <section class="process-section" aria-labelledby="proceso-titulo">
+    <div class="container">
+      <h2 class="section-title" id="proceso-titulo">¿Cómo te atendemos?</h2>
+      <p class="process-subtitle">Diagnóstico claro, solución eficiente y seguimiento post-servicio sin costo adicional.</p>
+      <div class="process-grid">
+
+        <div class="process-card">
+          <div class="process-num" aria-label="Paso 1">1</div>
+          <div>
+            <h4>Contáctanos</h4>
+            <p>Escríbenos por WhatsApp describiendo el problema. Te respondemos de inmediato.</p>
+          </div>
+        </div>
+
+        <div class="process-card">
+          <div class="process-num" aria-label="Paso 2">2</div>
+          <div>
+            <h4>Diagnóstico Gratis</h4>
+            <p>Evaluamos tu equipo de forma remota o presencial y te damos un diagnóstico claro sin costo.</p>
+          </div>
+        </div>
+
+        <div class="process-card">
+          <div class="process-num" aria-label="Paso 3">3</div>
+          <div>
+            <h4>Solución Técnica</h4>
+            <p>Aplicamos la solución de forma eficiente, transparente y con los mejores resultados.</p>
+          </div>
+        </div>
+
+        <div class="process-card">
+          <div class="process-num" aria-label="Paso 4">4</div>
+          <div>
+            <h4>Seguimiento</h4>
+            <p>Post-servicio: te consultamos que todo funcione bien. Soporte de seguimiento sin costo.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ MODOS DE ATENCIÓN ══════════════ -->
+  <section class="attention-section" aria-labelledby="atencion-titulo">
+    <div class="container">
+      <h2 class="section-title" id="atencion-titulo">Atención remota o presencial</h2>
+      <p class="section-subtitle">Elige el modo que más te convenga — ambos con la misma calidad y respuesta inmediata.</p>
+      <div class="attention-grid">
+
+        <div class="attention-card remote">
+          <div class="attention-icon" aria-hidden="true">
+            <!-- Wifi / remote -->
+            <svg viewBox="0 0 24 24">
+              <path d="M5 12.55a11 11 0 0114.08 0"/>
+              <path d="M1.42 9a16 16 0 0121.16 0"/>
+              <path d="M8.53 16.11a6 6 0 016.95 0"/>
+              <circle cx="12" cy="20" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <div class="attention-body">
+            <h4>Soporte Remoto</h4>
+            <p>Nos conectamos a tu equipo de forma segura con AnyDesk o TeamViewer. Sin necesidad de desplazamiento, sin esperas. Solucionamos el problema en minutos desde donde estés.</p>
+            <span class="attention-tag">Disponible al instante</span>
+          </div>
+        </div>
+
+        <div class="attention-card onsite">
+          <div class="attention-icon" aria-hidden="true">
+            <!-- Map pin -->
+            <svg viewBox="0 0 24 24">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div class="attention-body">
+            <h4>Atención Presencial</h4>
+            <p>Un técnico certificado visita tu hogar u oficina para resolver problemas que requieren intervención física: limpieza de equipos, cableado, instalación de hardware y más.</p>
+            <span class="attention-tag">Valle de Aburrá</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ BENEFICIOS ══════════════ -->
+  <section class="benefits-section" aria-labelledby="beneficios-titulo">
+    <div class="container">
+      <h2 class="section-title" id="beneficios-titulo">¿Por qué elegirnos?</h2>
+      <p class="section-subtitle">Rapidez, confidencialidad y garantía post-servicio en cada solución tecnológica que realizamos.</p>
+      <div class="benefits-grid">
+
+        <div class="benefit-item">
+          <div class="benefit-icon-wrap" aria-hidden="true">
+            <!-- Zap — respuesta rápida -->
+            <svg viewBox="0 0 24 24"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h4>Respuesta en Minutos</h4>
+          <p>Soporte remoto inmediato. Un técnico disponible para atenderte rápidamente vía WhatsApp o telefono.</p>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon-wrap" aria-hidden="true">
+            <!-- Lock — datos seguros -->
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          </div>
+          <h4>Datos 100% Seguros</h4>
+          <p>Respaldo y recuperación con total confidencialidad. Tu información nunca está en riesgo con nosotros.</p>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon-wrap" aria-hidden="true">
+            <!-- Tool — diagnóstico -->
+            <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <h4>Diagnóstico Gratuito</h4>
+          <p>Evaluamos tu equipo sin costo antes de cualquier trabajo. Transparencia total en el proceso.</p>
+        </div>
+
+        <div class="benefit-item">
+          <div class="benefit-icon-wrap" aria-hidden="true">
+            <!-- CheckCircle — garantía -->
+            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h4>Garantía Post-Servicio</h4>
+          <p>Si el problema regresa dentro de los 30 días, volvemos sin costo adicional. Tu tranquilidad importa.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ CITA ══════════════ -->
+  <section class="quote-section" aria-label="Nuestra filosofía">
     <div class="container">
       <blockquote>
-        <p>"Tu tecnología funcionando al 100%, siempre"</p>
-        <footer>— Ycay360, soporte confiable</footer>
+        <span class="quote-deco" aria-hidden="true">"</span>
+        <p>Tu tecnología funcionando al 100%, siempre</p>
+        <footer>— Ycay360, soporte tecnológico confiable</footer>
       </blockquote>
     </div>
   </section>
 
-  <!-- INFO ADICIONAL -->
-  <section class="info-section">
+  <!-- ══════════════ COBERTURA ══════════════ -->
+  <section class="info-section" aria-labelledby="cobertura-titulo">
     <div class="container">
-      <p class="text-center">
-        <strong>Atendemos hogares, pequeñas empresas y oficinas.</strong><br>
-        Soporte presencial en <strong>Bello y área metropolitana</strong>.
-      </p>
+      <p class="coverage-title" id="cobertura-titulo">Cobertura de atención</p>
+      <p class="coverage-sub">Atendemos hogares, pequeñas empresas y oficinas. Soporte remoto en toda Colombia.</p>
+      <div class="coverage-chips" role="list" aria-label="Zonas de atención presencial">
+        <span class="chip" role="listitem" style="font-weight: bold;">Valle de Aburrá · Remoto a todo Colombia</span>
+        <!-- <span class="chip" role="listitem">Bello</span>
+        <span class="chip" role="listitem">Medellín</span>
+        <span class="chip" role="listitem">Copacabana</span>
+        <span class="chip" role="listitem">Itagüí</span>
+        <span class="chip" role="listitem">Envigado</span>
+        <span class="chip" role="listitem">Sabaneta</span>
+        <span class="chip" role="listitem">Remoto · Todo Colombia</span> -->
+      </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
+  
+
+  <!-- ══════════════ CTA FINAL ══════════════ -->
+  <section class="contact-cta" aria-labelledby="cta-titulo">
+    <div class="container">
+      <h3 id="cta-titulo">¿Tu equipo tiene problemas?</h3>
+      <p>Escríbenos ahora. Un técnico te contactará en minutos por WhatsApp.</p>
+      <div class="cta-dual">
+        <a href="https://wa.me/573042096459?text=Hola,%20necesito%20soporte%20TIC"
+           class="btn-cta-primary" target="_blank" rel="noopener noreferrer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Solicitar soporte ahora
+        </a>
+        <a href="mailto:contacto@ycaycom.com?subject=Soporte%20TIC%20-%20Ycay360"
+           class="btn-cta-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Enviar correo
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ FOOTER ══════════════ -->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col">
-          <img src="../assets/logo-ycay360.png" alt="Ycay360" class="footer-logo" loading="lazy" onerror="this.src='../assets/fallback-image.jpg'">
+          <img src="../assets/LogoDefinitivoSinFondo.png" alt="Ycay360" class="footer-logo" loading="lazy" onerror="this.style.display='none'">
           <p>Transformamos espacios y optimizamos tu infraestructura digital.</p>
         </div>
         <div class="footer-col">
           <h4>Enlaces</h4>
           <ul>
-            <li><a href="../Inicio/">Inicio</a></li>
+            <li><a href="../">Inicio</a></li>
             <li><a href="../servicios-hogar/">Servicios Hogar</a></li>
             <li><a href="../soporte-tic/">Soporte TIC</a></li>
             <li><a href="../pintura/">Pintura</a></li>
@@ -141,8 +857,8 @@
     </div>
   </footer>
 
-  <!-- CHATBOT -->
-  <div id="chatbot" class="chatbot closed" role="dialog" aria-labelledby="chat-header">
+  <!-- ══════════════ CHATBOT ══════════════ -->
+  <div id="chatbot" class="chatbot closed" role="dialog" aria-labelledby="chat-header" aria-modal="true">
     <div class="chat-header" id="chat-header">
       <div class="flex items-center space-x-2">
         <div class="w-8 h-8 bg-green-500 rounded-full" aria-hidden="true"></div>
@@ -152,17 +868,17 @@
     </div>
     <div id="chat-body" class="chat-body" role="log" aria-live="polite"></div>
     <form id="chat-form" class="chat-form">
-      <input id="chat-input" type="text" placeholder="Escribe tu consulta..." autocomplete="off" />
+      <input id="chat-input" type="text" placeholder="Escribe tu consulta..." autocomplete="off" aria-label="Mensaje al asistente" />
       <button type="submit" aria-label="Enviar mensaje">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path>
         </svg>
       </button>
     </form>
   </div>
 
-  <button id="open-chat" class="open-chat" aria-label="Abrir chatbot">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24" height="24">
+  <button id="open-chat" class="open-chat" aria-label="Abrir asistente de WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24" height="24" aria-hidden="true">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
     </svg>
   </button>
@@ -170,8 +886,3 @@
   <script src="../js/script.js"></script>
 </body>
 </html>
-
-
-
-
-
